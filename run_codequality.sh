@@ -1,0 +1,2 @@
+sh run_static_code_check.sh
+sh run_unittest_and_coverage.sh
