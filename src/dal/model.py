@@ -92,3 +92,10 @@ class LiveTranslation(Base):
     Value = Column(Text)
 
     Live = relationship('Live')
+
+class Categories(Base):
+    __tablename__ = 'Categories'
+
+    UUID = Column(String(256), primary_key=True, nullable=False)
+    LanguageISO = Column(String(36), primary_key=True, nullable=False)
+    ValueName = Column(String(256))
