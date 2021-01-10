@@ -7,7 +7,7 @@ import config
 app = Flask(__name__)
 app.config.from_object(config.Config)
 
-app.register_blueprint(bp_session, url_prefix='/api/v1/session')
+app.register_blueprint(bp_session, url_prefix='/api/v1/sessions')
 app.register_blueprint(bp_categories, url_prefix='/api/v1/categories')
 # TODO-2: create and register the new endpoints
 
