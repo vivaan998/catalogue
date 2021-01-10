@@ -3,24 +3,10 @@ from src.dal.db import Db
 
 
 ##
-# ALL PACKs
+# ALL Categories based on language
 ##
 
-def read_categories():
-    db_instance = Db()
-    session = db_instance.session
-    t_categories = db_instance.model.Categories
-    results = []
-    try:
-        results = session.query(t_categories).all()
-    except exc.NoResultFound as ex:
-        print(str(ex))
-        pass
-
-    return results
-
-
-def read_category(category_languageISO):
+def read_categories(category_languageISO):
     db_instance = Db()
     session = db_instance.session
     t_categories = db_instance.model.Categories

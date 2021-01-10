@@ -28,7 +28,6 @@ class Session(Base):
     LastUpdateDatetime = Column(DateTime)
 
 
-
 class Live(Base):
     __tablename__ = 'Live'
 
@@ -93,9 +92,10 @@ class LiveTranslation(Base):
 
     Live = relationship('Live')
 
+
 class Categories(Base):
     __tablename__ = 'Categories'
 
     UUID = Column(String(256), primary_key=True, nullable=False)
     LanguageISO = Column(String(36), primary_key=True, nullable=False)
-    ValueName = Column(String(256))
+    Value = Column(Text)

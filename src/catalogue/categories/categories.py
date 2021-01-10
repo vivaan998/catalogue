@@ -5,27 +5,15 @@
 from .core import retrieve_data 
 
 
-# def create():
-#     create.execute()
-#     pass
-
-
 def get(languageISO):
-    categories = retrieve_data.read_category(languageISO)
+    categories = retrieve_data.read_categories(languageISO)
 
-    print('HERE IN GET BACK')
-    print(categories)
     results = list()
 
     for category in categories:
         temp = dict()
         temp['UUID'] = category.UUID
-        temp['value'] = category.ValueName
-
+        temp['value'] = category.Value
         results.append(temp)
 
     return results
-
-
-# def edit():
-#     pass

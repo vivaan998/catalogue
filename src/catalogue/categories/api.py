@@ -6,6 +6,8 @@ from flask import Blueprint
 from flask import request
 from flask import jsonify
 from . import categories
+import base64
+import json
 from flask import g
 
 
@@ -15,25 +17,19 @@ bp_categories = Blueprint('categories', 'categories')
 @bp_categories.before_request
 def before_request_func():
     # TODO-n: extract user name from the auth
-    g.requestor_uuid = 1243242636
-    pass
-
-
-@bp_categories.route('/', methods=['POST'])
-def create():
-    categories.create()
-    return request.method+' user!'
+    # auth = request.headers['Authorization']
+    # base64_bytes = auth.encode('ascii')
+    # message_bytes = base64.b64decode(base64_bytes)
+    # message = json.loads(message_bytes.decode('ascii'))
+    # g.requestor_uuid = message['user_uuid']
+    g.requestor_uuid = 1234
 
 
 @bp_categories.route('/', methods=['GET'])
 def get():
-    languageISO = request.args.get('language')
-    print('>>>>> API - CATEGORIES >>> GET', languageISO)
-    category = categories.get(languageISO)
-    return jsonify(category)
-
-
-@bp_categories.route('/<uuid>', methods=['PUT'])
-def edit(uuid):
-    categories.edit()
-    return request.method+' user!'
+    if 'language' in request.args:
+        languageISO = request.args.get('language')
+        category = categories.get(languageISO)
+        return jsonify(category)
+    else:
+        return jsonify({"error": True, "message": "Please select a langauge"})
