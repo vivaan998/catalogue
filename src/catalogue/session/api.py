@@ -4,8 +4,11 @@
 
 from flask import Blueprint
 from flask import request
+from flask import jsonify
 from . import session
 from flask import g
+import json
+from ...exception.SessionException import SessionUUIDNotGiven
 
 
 bp_session = Blueprint('session', 'session')
@@ -20,17 +23,34 @@ def before_request_func():
 
 @bp_session.route('/', methods=['POST'])
 def create():
-    session.create()
-    return request.method+' user!'
+    data = request.get_json()
+    sessions, code = session.add(data)
+    return jsonify(sessions), code
+
+@bp_session.route('/', methods=['PUT'])
+def update():
+    data = request.get_json()
+    sessions = session.edit(data)
+    return jsonify(sessions)
 
 
-@bp_session.route('/<uuid>', methods=['GET'])
-def get(uuid):
-    session.get()
-    return request.method+' user!'
+@bp_session.route('/', methods=['GET'])
+def get():
+    if 'session_uuid' in request.args and request.args.get('session_uuid'):
+        sessionUUID = request.args.get('session_uuid')
+        sessions, code = session.get(sessionUUID)
+        return jsonify(sessions), code
+    else:
+        result = SessionUUIDNotGiven()
+        return result, 403
 
 
-@bp_session.route('/<uuid>', methods=['PUT'])
-def edit(uuid):
-    session.edit()
-    return request.method+' user!'
+@bp_session.route('/', methods=['DELETE'])
+def delete():
+    if 'session_uuid' in request.args and request.args.get('session_uuid'):
+        sessionUUID = request.args.get('session_uuid')
+        sessions, code = session.delete(sessionUUID)
+        return sessions, code
+    else:
+        result = SessionUUIDNotGiven()
+        return result, 403

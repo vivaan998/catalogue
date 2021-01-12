@@ -22,10 +22,13 @@ class Session(Base):
 
     UUID = Column(String(36), primary_key=True)
     Name = Column(String(256))
-    Category = Column(String(36))
+    Category = Column(Text)
     CreatorUUID = Column(String(36))
     CreationDateTime = Column(DateTime, server_default=text("CURRENT_TIMESTAMP"))
     LastUpdateDatetime = Column(DateTime)
+    Description = Column(Text)
+    LanguageISO = Column(String(36))
+
 
 
 class Live(Base):
@@ -55,19 +58,8 @@ class SessionTag(Base):
     __tablename__ = 'SessionTag'
 
     SessionUUID = Column(ForeignKey('Session.UUID', ondelete='CASCADE'), primary_key=True, nullable=False)
-    Hashtag = Column(String(256), primary_key=True, nullable=False)
+    Hashtag = Column(Text, primary_key=True, nullable=False)
     LanguageISO = Column(String(2))
-
-    Session = relationship('Session')
-
-
-class SessionTranslation(Base):
-    __tablename__ = 'SessionTranslation'
-
-    SessionUUID = Column(ForeignKey('Session.UUID', ondelete='CASCADE'), primary_key=True, nullable=False)
-    LanguageISO = Column(String(2), primary_key=True, nullable=False)
-    Field = Column(String(128), primary_key=True, nullable=False)
-    Value = Column(Text)
 
     Session = relationship('Session')
 
