@@ -1,0 +1,15 @@
+type: object
+required:
+  - ref_uuid
+properties:
+  ref_uuid:
+    type: string
+    format: uuid
+  max_slots:
+    type: integer
+    minimum: 0
+    description: 'Maximum number of slots'
+    default: 100
+    
+
+

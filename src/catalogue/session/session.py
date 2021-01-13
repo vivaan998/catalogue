@@ -5,6 +5,7 @@
 from .core import create, retrieve_data, delete_data, update
 import datetime
 
+
 def add(data):
     name = data['name']
     category = data['category']
@@ -13,8 +14,9 @@ def add(data):
     creatorUUID = data['creator_uuid']
     createdTime = datetime.datetime.now()
     lastUpdateDateTime = datetime.datetime.now()
-    result, code = create.write(name, category, hashtags, description, creatorUUID, createdTime, lastUpdateDateTime)
-    return result, code
+    result = create.write(name, category, hashtags, description, creatorUUID, createdTime, lastUpdateDateTime)
+
+    return result
 
 
 def edit(data):
@@ -24,18 +26,16 @@ def edit(data):
     hashtags = data['hashtags']
     description = data['description']
     creatorUUID = data['creator_uuid']
-    createdTime = datetime.datetime.now()
-    lastUpdateDateTime = datetime.datetime.now()
-    result, code = update.edit(sessionUUID, name, category, hashtags, description, creatorUUID, createdTime, lastUpdateDateTime)
+    result = update.edit(sessionUUID, name, category, hashtags, description, creatorUUID)
 
-    return result, code
+    return result
 
 
 def get(sessionUUID):
-    sessions, code = retrieve_data.read_session(sessionUUID) 
-    return sessions, code
+    sessions = retrieve_data.read_session(sessionUUID)
+    return sessions
 
 
 def delete(sessionUUID):
-    result, code = delete_data.delete(sessionUUID)
-    return result, code
+    result = delete_data.delete(sessionUUID)
+    return result

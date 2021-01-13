@@ -1,7 +1,5 @@
 import unittest
 
-from ..core import create
-
 
 class TestCreateSuccess(unittest.TestCase):
     def test_create(self):

@@ -1,6 +1,6 @@
 # coding: utf-8
-from sqlalchemy import Column, DateTime, Float, ForeignKey, String, Text, text
-from sqlalchemy.dialects.mysql import BIGINT, INTEGER
+from sqlalchemy import Column, DateTime, ForeignKey, String, Text, text
+from sqlalchemy.dialects.mysql import BIGINT
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -28,7 +28,6 @@ class Session(Base):
     LastUpdateDatetime = Column(DateTime)
     Description = Column(Text)
     LanguageISO = Column(String(36))
-
 
 
 class Live(Base):

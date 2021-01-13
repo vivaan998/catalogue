@@ -1,0 +1,34 @@
+get:
+  security:
+    - Bearer: []
+  tags:
+    - Catalogue
+  parameters:
+    - name: q
+      in: query
+      required: true
+      type: string  
+      description: A comma-separated list of generic search criteria.
+    - name: category
+      in: query
+      required: true
+      type: string  
+      description: Category  
+    - name: presenter
+      in: query
+      required: true
+      type: string  
+      description: Presenter
+  produces:
+    - application/json
+  responses:
+    '200':
+      description: Result found 
+      schema:
+        type: array
+        items:
+          $ref: "#/definitions/Live"
+    '400':
+      description: Invalid query supplied
+    '404':
+      description: Not found

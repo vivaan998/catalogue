@@ -2,12 +2,11 @@
 # TODO-1: Finish the implementation of existing methods and add the new methods if needed
 # TODO-1: Perform unit test on the methods exposed here
 
-from .core import retrieve_data 
+from .core import retrieve_data
 
 
 def get(languageISO):
     categories = retrieve_data.read_categories(languageISO)
-
     results = list()
 
     for category in categories:

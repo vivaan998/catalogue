@@ -2,16 +2,17 @@
 # TODO-1: Finish/correct the implementation of existing methods and add the new methods if needed
 # TODO-1: Perform postman test on the methods exposed here
 
-from flask import Blueprint
+from flask import Blueprint, make_response
 from flask import request
 from flask import jsonify
 from . import session
 from flask import g
-import json
-from ...exception.SessionException import SessionUUIDNotGiven
-
-
+from src.exc.app_exception import MissingFieldException
 bp_session = Blueprint('session', 'session')
+
+
+def make_json_response(body, code=200):
+    return make_response(jsonify(body), code)
 
 
 @bp_session.before_request
@@ -24,33 +25,32 @@ def before_request_func():
 @bp_session.route('/', methods=['POST'])
 def create():
     data = request.get_json()
-    sessions, code = session.add(data)
-    return jsonify(sessions), code
+    sessions = session.add(data)
+    return make_json_response(sessions)
+
 
 @bp_session.route('/', methods=['PUT'])
 def update():
     data = request.get_json()
     sessions = session.edit(data)
-    return jsonify(sessions)
+    return make_json_response(sessions)
 
 
 @bp_session.route('/', methods=['GET'])
 def get():
-    if 'session_uuid' in request.args and request.args.get('session_uuid'):
+    if 'session_uuid' in request.args:
         sessionUUID = request.args.get('session_uuid')
-        sessions, code = session.get(sessionUUID)
-        return jsonify(sessions), code
+        sessions = session.get(sessionUUID)
+        return make_json_response(sessions)
     else:
-        result = SessionUUIDNotGiven()
-        return result, 403
+        raise MissingFieldException('Session ID in the query')
 
 
 @bp_session.route('/', methods=['DELETE'])
 def delete():
-    if 'session_uuid' in request.args and request.args.get('session_uuid'):
+    if 'session_uuid' in request.args:
         sessionUUID = request.args.get('session_uuid')
-        sessions, code = session.delete(sessionUUID)
-        return sessions, code
+        sessions = session.delete(sessionUUID)
+        return make_json_response(sessions)
     else:
-        result = SessionUUIDNotGiven()
-        return result, 403
+        raise MissingFieldException('Session ID in the query')

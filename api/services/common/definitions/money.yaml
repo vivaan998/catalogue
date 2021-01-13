@@ -1,0 +1,9 @@
+type: object
+required:
+  - currency
+  - amount
+properties:
+  amount:
+    type: integer
+  currency:
+    $ref: '#/definitions/Currency'

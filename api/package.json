@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "multi-file-swagger": "^2.3.0"
+  }
+}

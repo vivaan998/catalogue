@@ -1,0 +1,27 @@
+type: object
+required:
+  - live_uuid
+  - partecipant_uuid
+  - created_at
+  - tokens
+properties:
+  live_uuid:
+    type: string
+    format: uuid
+    description: 'UUID of the booked live'
+  partecipant_uuid:
+    type: string
+    format: uuid
+    description: 'UUID of the user that booked the live'
+  created_at:
+    type: string
+    format: datetime
+    description: 'GMT Creation date time of the booking as defined by RFC 3339, section 5.6'
+    example: '2020-07-21T17:32:28Z'
+  tokens:
+    type: integer
+    description: 'Amount of tokens payed'
+    example: 2
+    minimum: 0
+
+

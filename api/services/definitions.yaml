@@ -1,0 +1,47 @@
+Message:
+  $ref: ./common/definitions/message.yaml
+
+LanguageCode:
+  $ref: ./common/definitions/language_code.yaml
+
+Localizable:
+  $ref: ./common/definitions/localizable.yaml
+
+Currency:
+  $ref: ./common/definitions/currency.yaml
+
+Money:
+  $ref: ./common/definitions/money.yaml
+
+Category: 
+  $ref: ./catalogue/manager/definitions/category.yaml
+
+Session: 
+  $ref: ./catalogue/manager/definitions/session.yaml
+
+SessionBody: 
+  $ref: ./catalogue/manager/definitions/session_body.yaml
+
+SessionReply: 
+  $ref: ./catalogue/manager/definitions/session_reply.yaml
+
+Image: 
+  $ref: ./catalogue/manager/definitions/image.yaml
+
+ImageBody: 
+  $ref: ./catalogue/manager/definitions/image_body.yaml
+
+Live: 
+  $ref: ./catalogue/manager/definitions/live.yaml
+
+LiveBody: 
+  $ref: ./catalogue/manager/definitions/live_body.yaml
+
+Availability:
+  $ref: ./catalogue/availability/definitions/availability.yaml
+
+AvailabilityBody:
+  $ref: ./catalogue/availability/definitions/availability_body.yaml
+
+
+

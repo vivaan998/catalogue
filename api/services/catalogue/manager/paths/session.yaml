@@ -1,0 +1,32 @@
+post:
+  security:
+    - Bearer: []
+  tags:
+    - Catalogue - Manager
+  summary: 'Create a session'
+  description: 'Create an session'
+  consumes:
+    - application/json
+  produces:
+    - application/json
+  parameters:
+    - name: data
+      in: body
+      required: true
+      schema:
+        $ref: '#/definitions/SessionBody'
+  responses:
+    '200':
+      description: Feedback created
+      schema: 
+        $ref: '#/definitions/SessionReply'
+    '400':
+      description: Invalid uuid supplied
+      schema: 
+        $ref: '#/definitions/Message'
+    '404':
+      description: Session Uuid not found
+      schema: 
+        $ref: '#/definitions/Message'      
+
+

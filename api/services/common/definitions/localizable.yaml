@@ -1,0 +1,9 @@
+type: object
+required:
+  - value
+  - code
+properties:
+  value:
+    type: string
+  code:
+    $ref: '#/definitions/LanguageCode'

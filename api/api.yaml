@@ -1,9 +1,9 @@
 swagger: '2.0'
 info:
   version: 1.0.0
-  title: Catalogue API
+  title: Flio API
 host: localhost
-basePath: /api/v1
+basePath: /v1
 schemes:
   - https
   - http

@@ -1,0 +1,74 @@
+get:
+  security:
+    - Bearer: []
+  tags:
+    - Office  
+  summary: 'Search bookings'
+  description: 'Search booking, by default it returns only the booking of the session in the future'
+  parameters:
+    - name: participant_uuid
+      in: query
+      type: string
+      format: uuid
+    - name: live_uuid
+      in: query
+      type: string
+      format: uuid
+      description: 'Fetch all the booking for a given live'
+    - name: all
+      in: query
+      type: boolean
+      description: 'Set to True to display all the bookings of the given participant '
+      default: False
+  produces:
+    - application/json
+  responses:
+    '200':
+      description: Bookings found 
+      schema:
+        type: array
+        items:
+          $ref: "#/definitions/Booking"
+    '400':
+      description: Invalid query supplied
+      schema: 
+        $ref: '#/definitions/Message'
+    '404':
+      description: Not found
+      schema: 
+        $ref: '#/definitions/Message'
+
+post:
+  security:
+    - Bearer: []
+  tags:
+    - Office  
+  summary: 'Create a booking'
+  description: 'Create an booking'
+  consumes:
+    - application/json
+  produces:
+    - application/json
+  parameters:
+    - name: data
+      in: body
+      required: true
+      schema:
+        $ref: '#/definitions/BookingBody'
+  responses:
+    '200':
+      description: Booking created
+      schema: 
+        $ref: '#/definitions/BookingReply'
+    '400':
+      description: Invalid uuid supplied
+      schema: 
+        $ref: '#/definitions/Message'
+    '404':
+      description: Session Uuid not found
+      schema: 
+        $ref: '#/definitions/Message'      
+    '406':
+      description: Not enough tokens, please recharge
+      schema: 
+        $ref: '#/definitions/Message'

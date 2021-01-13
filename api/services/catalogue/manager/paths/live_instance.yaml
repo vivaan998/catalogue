@@ -1,0 +1,64 @@
+delete:
+  security:
+    - Bearer: []
+  tags:
+    - Catalogue - Manager
+  summary: 'Delete live'
+  description: 'Delete live'
+  parameters:
+    - name: live_uuid
+      in: path
+      required: true
+      type: string
+      format: uuid
+  produces:
+    - application/json
+  responses:
+    '201':
+      description: Lives deleted 
+    '400':
+      description: Invalid query supplied
+      schema: 
+        $ref: '#/definitions/Message'
+    '404':
+      description: Not found
+      schema: 
+        $ref: '#/definitions/Message'
+
+put:
+  security:
+    - Bearer: []
+  tags:
+    - Catalogue - Manager  
+  summary: 'Modify live'
+  description: 'Modify live, the presenter, if not specififed, will be the creator of the relative session'
+  parameters:
+    - name: live_uuid
+      in: path
+      required: true
+      type: string
+      format: uuid
+    - name: data
+      in: body
+      schema:
+        type: object
+        properties:
+          live:
+            $ref: '#/definitions/LiveBody'
+          session_uuid:
+            type: string
+            format: uuid
+      required: True
+  produces:
+    - application/json
+  responses:
+    '201':
+      description: Lives updated 
+    '400':
+      description: Invalid query supplied
+      schema: 
+        $ref: '#/definitions/Message'
+    '404':
+      description: Not found
+      schema: 
+        $ref: '#/definitions/Message'

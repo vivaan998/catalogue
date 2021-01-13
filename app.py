@@ -1,15 +1,30 @@
-from flask import Flask
+from flask import Flask, make_response, jsonify
 from src.dal.db import Db
 from src.catalogue.session.api import bp_session
 from src.catalogue.categories.api import bp_categories
 import config
+
+from src.exc.app_exception import AppException
 
 app = Flask(__name__)
 app.config.from_object(config.Config)
 
 app.register_blueprint(bp_session, url_prefix='/api/v1/sessions')
 app.register_blueprint(bp_categories, url_prefix='/api/v1/categories')
+
+
 # TODO-2: create and register the new endpoints
+
+@app.errorhandler(AppException)
+def app_error(err):
+    app.logger.exception(err)
+    return make_response(jsonify(err.error), err.http_code)
+
+
+@app.errorhandler(Exception)
+def handle_generic_error(err):
+    app.logger.exception(err)
+    return make_response(jsonify(str(err)), 500)
 
 
 @app.after_request
@@ -29,4 +44,3 @@ def init_app(flask_app):
 if __name__ == '__main__':
     init_app(app)
     app.run()
-

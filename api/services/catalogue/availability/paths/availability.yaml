@@ -1,0 +1,26 @@
+post:
+  security:
+    - Bearer: []
+  tags:
+    - Catalogue - Availability  
+  summary: 'Setup initial availability for the given session'
+  description: 'Setup initial availability for the given session'
+  parameters:
+    - name: data
+      in: body
+      required: True
+      schema:
+        $ref: '#/definitions/AvailabilityBody'
+  produces:
+    - application/json
+  responses:
+    '201':
+      description: Availability initied 
+    '400':
+      description: Invalid query supplied
+      schema: 
+        $ref: '#/definitions/Message'
+    '404':
+      description: Not found
+      schema: 
+        $ref: '#/definitions/Message'
