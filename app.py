@@ -4,7 +4,6 @@ from src.catalogue.session.api import bp_session
 from src.catalogue.categories.api import bp_categories
 from src.catalogue.live.api import bp_live
 import config
-import uuid
 
 from src.exc.app_exception import AppException
 
@@ -28,14 +27,6 @@ def app_error(err):
 def handle_generic_error(err):
     app.logger.exception(err)
     return make_response(jsonify(str(err)), 500)
-
-
-def is_valid_uuid(val):
-    try:
-        uuid.UUID(str(val))
-        return True
-    except ValueError:
-        return False
 
 
 @app.after_request

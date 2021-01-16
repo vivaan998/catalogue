@@ -4,7 +4,15 @@
 
 from .core import retrieve_data, delete_data, create, update
 from src.exc.app_exception import InvalidUUIDException
-from app import is_valid_uuid
+import uuid
+
+
+def is_valid_uuid(val):
+    try:
+        uuid.UUID(str(val))
+        return True
+    except ValueError:
+        return False
 
 
 def add(data):

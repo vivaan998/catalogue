@@ -8,6 +8,7 @@ from flask import jsonify
 from . import session
 from flask import g
 from src.exc.app_exception import MissingFieldException
+
 bp_session = Blueprint('session', 'session')
 
 
