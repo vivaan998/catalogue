@@ -29,6 +29,8 @@ class Session(Base):
     Description = Column(Text)
     LanguageISO = Column(String(36))
 
+    Categories = relationship('Categories')
+
 
 class Live(Base):
     __tablename__ = 'Live'
@@ -40,6 +42,8 @@ class Live(Base):
     EndsAtGMT = Column(DateTime, nullable=False)
     LastUpdateDatetime = Column(DateTime)
     CreationDateTime = Column(DateTime, server_default=text("CURRENT_TIMESTAMP"))
+    Description = Column(Text)
+    LanguageISO = Column(String(36))
 
     Session = relationship('Session')
 
@@ -67,19 +71,8 @@ class LiveTag(Base):
     __tablename__ = 'LiveTag'
 
     LiveUUID = Column(ForeignKey('Live.UUID', ondelete='CASCADE'), primary_key=True, nullable=False)
-    Hashtag = Column(String(256), primary_key=True, nullable=False)
-    LanguageISO = Column(String(2), primary_key=True, nullable=False)
-
-    Live = relationship('Live')
-
-
-class LiveTranslation(Base):
-    __tablename__ = 'LiveTranslation'
-
-    LiveUUID = Column(ForeignKey('Live.UUID', ondelete='CASCADE'), primary_key=True, nullable=False)
-    LanguageISO = Column(String(2), primary_key=True, nullable=False)
-    Field = Column(String(128), primary_key=True, nullable=False)
-    Value = Column(Text)
+    Hashtag = Column(Text, primary_key=True, nullable=False)
+    LanguageISO = Column(String(2))
 
     Live = relationship('Live')
 
