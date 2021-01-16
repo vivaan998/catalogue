@@ -10,9 +10,9 @@ class MissingFieldException(AppException):
         super().__init__('Missing ' + error, 400)
 
 
-class AuthorizationException(AppException):
+class InvalidUUIDException(AppException):
     def __init__(self, error=None):
-        super().__init__(error, 403)
+        super().__init__(error, 400)
 
 
 class NotFoundException(AppException):
@@ -22,7 +22,7 @@ class NotFoundException(AppException):
 
 class ConflictException(AppException):
     def __init__(self, error=None):
-        super().__init__(error, 409)
+        super().__init__(error, 408)
 
 
 class ServerException(AppException):
@@ -32,4 +32,4 @@ class ServerException(AppException):
 
 class IntegrityException(AppException):
     def __init__(self, error=None):
-        super().__init__('Missing ' + error, 405)
+        super().__init__(error, 400)

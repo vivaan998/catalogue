@@ -53,7 +53,7 @@ def writeToSessionTag(session_UUID, hashtags, languageISO):
 def write(name, category, hashtags, description, creatorUUID, createdTime, lastUpdateDateTime):
     db_instance = Db()
     session_table = db_instance.model.Session
-    sql_session_table = _populate_session_model(session_table, name, category['value'], creatorUUID, createdTime,
+    sql_session_table = _populate_session_model(session_table, name, category['uuid'], creatorUUID, createdTime,
                                                 lastUpdateDateTime, description['value'], description['code'])
     session = db_instance.session
     try:

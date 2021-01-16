@@ -11,7 +11,7 @@ metadata = Base.metadata
 class Image(Base):
     __tablename__ = 'Image'
 
-    RefUUID = Column(String(36), primary_key=True, nullable=False)
+    RefUUID = Column(String(256), primary_key=True, nullable=False)
     Uri = Column(String(36), primary_key=True, nullable=False)
     Title = Column(String(256))
     Description = Column(Text)
@@ -20,10 +20,10 @@ class Image(Base):
 class Session(Base):
     __tablename__ = 'Session'
 
-    UUID = Column(String(36), primary_key=True)
+    UUID = Column(String(256), primary_key=True)
     Name = Column(String(256))
-    Category = Column(Text)
-    CreatorUUID = Column(String(36))
+    Category = Column(ForeignKey('Categories.UUID', ondelete='CASCADE'), index=True, nullable=False)
+    CreatorUUID = Column(String(256), nullable=False)
     CreationDateTime = Column(DateTime, server_default=text("CURRENT_TIMESTAMP"))
     LastUpdateDatetime = Column(DateTime)
     Description = Column(Text)
@@ -33,7 +33,7 @@ class Session(Base):
 class Live(Base):
     __tablename__ = 'Live'
 
-    UUID = Column(String(36), primary_key=True)
+    UUID = Column(String(256), primary_key=True)
     SessionUUID = Column(ForeignKey('Session.UUID'), index=True)
     PresenterUUID = Column(String(36))
     StartAtGMT = Column(DateTime, nullable=False)

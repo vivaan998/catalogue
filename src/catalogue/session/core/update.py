@@ -31,10 +31,9 @@ def edit(sessionUUID, name, category, hashtags, description, creatorUUID):
         })
 
         session.commit()
-        hashSessions.commit()
 
-        if sessions:
-            return {'info': 'Successfully updated for UUID: ' + sessionUUID}
+        if sessions and hashSessions:
+            return {'message': 'Successfully updated for UUID: ' + sessionUUID}
 
     except exc.NoResultFound as ex:
         print(str(ex))

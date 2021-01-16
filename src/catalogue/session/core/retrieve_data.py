@@ -12,14 +12,16 @@ def read_session(sessionUUID):
     session = db_instance.session
     t_session = db_instance.model.Session
     t_sessionTag = db_instance.model.SessionTag
+    t_category = db_instance.model.Categories
     try:
         results = dict()
         sessions = session.query(t_session).filter(t_session.UUID == sessionUUID).one()
         hashtags = session.query(t_sessionTag).filter(t_sessionTag.SessionUUID == sessionUUID).one()
+        category = session.query(t_category).filter(t_category.UUID == sessions.Category).one()
         results['name'] = sessions.Name
         results['category'] = {
-            'value': sessions.Category,
-            'uuid': sessions.UUID
+            'value': category.Value,
+            'uuid': category.UUID
         }
         results['hashtags'] = hashtags.Hashtag.split(',')
         results['description'] = {
