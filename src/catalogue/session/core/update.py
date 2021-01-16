@@ -33,12 +33,12 @@ def edit(sessionUUID, name, category, hashtags, description, creatorUUID):
         session.commit()
 
         if sessions and hashSessions:
-            return {'message': 'Successfully updated for UUID: ' + sessionUUID}
+            return {'session_uuid': sessionUUID + ' successfully updated'}
 
     except exc.NoResultFound as ex:
         print(str(ex))
-        raise NotFoundException(str(ex))
+        raise NotFoundException({'error': str(ex)})
     except Exception as ex:
         print(str(ex))
         session.rollback()
-        raise ServerException(str(ex))
+        raise ServerException({'error': str(ex)})

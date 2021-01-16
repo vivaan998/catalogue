@@ -15,11 +15,11 @@ def delete(sessionUUID):
         sessions = session.query(t_session).filter(t_session.UUID == sessionUUID).delete()
         session.commit()
         if sessions:
-            return {'check': 'deleted'}
+            return {'session_uuid': sessionUUID + ' successfully deleted'}
 
     except exc.NoResultFound as ex:
         print(str(ex))
-        return NotFoundException(str(ex))
+        return NotFoundException({'error': str(ex)})
     except Exception as ex:
         print(str(ex))
-        return ServerException(str(ex))
+        return ServerException({'error': str(ex)})

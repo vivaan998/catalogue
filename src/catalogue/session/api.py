@@ -11,7 +11,7 @@ from src.exc.app_exception import MissingFieldException
 bp_session = Blueprint('session', 'session')
 
 
-def make_json_response(body, code=200):
+def make_json_response(body, code):
     return make_response(jsonify(body), code)
 
 
@@ -26,14 +26,14 @@ def before_request_func():
 def create():
     data = request.get_json()
     sessions = session.add(data)
-    return make_json_response(sessions)
+    return make_json_response(sessions, 201)
 
 
 @bp_session.route('/', methods=['PUT'])
 def update():
     data = request.get_json()
     sessions = session.edit(data)
-    return make_json_response(sessions)
+    return make_json_response(sessions, 202)
 
 
 @bp_session.route('/', methods=['GET'])
@@ -41,9 +41,9 @@ def get():
     if 'session_uuid' in request.args:
         sessionUUID = request.args.get('session_uuid')
         sessions = session.get(sessionUUID)
-        return make_json_response(sessions)
+        return make_json_response(sessions, 200)
     else:
-        raise MissingFieldException('Session ID in the query')
+        raise MissingFieldException({'error': 'Session ID in the query'})
 
 
 @bp_session.route('/', methods=['DELETE'])
@@ -51,6 +51,6 @@ def delete():
     if 'session_uuid' in request.args:
         sessionUUID = request.args.get('session_uuid')
         sessions = session.delete(sessionUUID)
-        return make_json_response(sessions)
+        return make_json_response(sessions, 200)
     else:
-        raise MissingFieldException('Session ID in the query')
+        raise MissingFieldException({'error': 'Session ID in the query'})

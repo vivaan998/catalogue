@@ -48,7 +48,7 @@ def get(sessionUUID):
         sessions = retrieve_data.read_session(sessionUUID)
         return sessions
     else:
-        raise InvalidUUIDException('Invalid UUID supplied')
+        raise InvalidUUIDException({'error': 'Invalid UUID supplied'})
 
 
 def delete(sessionUUID):
@@ -56,4 +56,4 @@ def delete(sessionUUID):
         result = delete_data.delete(sessionUUID)
         return result
     else:
-        raise InvalidUUIDException('Invalid UUID supplied')
+        raise InvalidUUIDException({'error': 'Invalid UUID supplied'})

@@ -66,8 +66,8 @@ def write(name, category, hashtags, description, creatorUUID, createdTime, lastU
     except IntegrityError as ex:
         print(str(ex))
         session.rollback()
-        raise IntegrityException(str(ex))
+        raise IntegrityException({'error': str(ex)})
     except Exception as ex:
         print(str(ex))
         session.rollback()
-        raise ServerException(str(ex))
+        raise ServerException({'error': str(ex)})
