@@ -12,10 +12,6 @@ from src.exc.app_exception import MissingFieldException
 bp_categories = Blueprint('categories', 'categories')
 
 
-def make_json_response(body, code=200):
-    return make_response(jsonify(body), code)
-
-
 @bp_categories.before_request
 def before_request_func():
     # TODO-n: extract user name from the auth
@@ -27,6 +23,6 @@ def get():
     if 'language' in request.args:
         languageISO = request.args.get('language')
         category = categories.get(languageISO)
-        return make_json_response(category)
+        return make_response(jsonify(category), 200)
     else:
-        raise MissingFieldException('Language in the query parameter')
+        raise MissingFieldException({'error': 'Language in the query parameter'})

@@ -3,6 +3,7 @@ from src.dal.db import Db
 from src.catalogue.session.api import bp_session
 from src.catalogue.categories.api import bp_categories
 import config
+import uuid
 
 from src.exc.app_exception import AppException
 
@@ -31,6 +32,14 @@ def handle_generic_error(err):
 def after_request_func(response):
     Db().session.remove()
     return response
+
+
+def is_valid_uuid(val):
+    try:
+        uuid.UUID(str(val))
+        return True
+    except ValueError:
+        return False
 
 
 def init_app(flask_app):

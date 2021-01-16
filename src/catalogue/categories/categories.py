@@ -10,9 +10,8 @@ def get(languageISO):
     results = list()
 
     for category in categories:
-        temp = dict()
-        temp['UUID'] = category.UUID
-        temp['value'] = category.Value
-        results.append(temp)
-
+        results.append({
+            'UUID': category.UUID,
+            'value': category.Value
+        })
     return results

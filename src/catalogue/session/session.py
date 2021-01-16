@@ -5,15 +5,7 @@
 from .core import create, retrieve_data, delete_data, update
 from src.exc.app_exception import InvalidUUIDException
 import datetime
-import uuid
-
-
-def is_valid_uuid(val):
-    try:
-        uuid.UUID(str(val))
-        return True
-    except ValueError:
-        return False
+from app import is_valid_uuid
 
 
 def add(data):
@@ -39,7 +31,7 @@ def edit(data):
         result = update.edit(sessionUUID, name, category, hashtags, description, creatorUUID)
         return result
     else:
-        raise InvalidUUIDException('Invalid UUID supplied')
+        raise InvalidUUIDException({'error': 'Invalid UUID supplied'})
 
 
 def get(sessionUUID):

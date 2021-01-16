@@ -1,6 +1,6 @@
 from sqlalchemy.orm import exc
 from src.dal.db import Db
-from src.exc.app_exception import NotFoundException
+from src.exc.app_exception import NotFoundException, ServerException
 
 
 ##
@@ -13,9 +13,13 @@ def read_categories(category_languageISO):
     t_categories = db_instance.model.Categories
 
     try:
-        result = session.query(t_categories).filter(
-            t_categories.LanguageISO == category_languageISO).all()
+        result = session.query(t_categories).filter(t_categories.LanguageISO == category_languageISO).all()
         return result
+
     except exc.NoResultFound as ex:
         print(str(ex))
-        raise NotFoundException(str(ex))
+        raise NotFoundException({'error': str(ex)})
+
+    except Exception as ex:
+        print(str(ex))
+        raise ServerException({'error': str(ex)})
