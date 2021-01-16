@@ -2,36 +2,39 @@
 # TODO-1: Finish the implementation of existing methods and add the new methods if needed
 # TODO-1: Perform unit test on the methods exposed here
 
-from .core import retrieve_data, delete_data
+from .core import retrieve_data, delete_data, create, update
 from src.exc.app_exception import InvalidUUIDException
-import datetime
 from app import is_valid_uuid
 
 
 def add(data):
-    name = data['name']
-    category = data['category']
-    hashtags = data['hashtags']
-    description = data['description']
-    creatorUUID = data['creator_uuid']
-    createdTime = datetime.datetime.now()
-    lastUpdateDateTime = datetime.datetime.now()
-    result = create.write(name, category, hashtags, description, creatorUUID, createdTime, lastUpdateDateTime)
+    lives = data['live']
+    _from = lives['from']
+    _to = data['to']
+    presenter_uuid = lives['presenter_uuid']
+    description = lives['description']
+    language = lives['language']
+    session_uuid = data['session_uuid']
+    hashtags = lives['hashtags']
+    result = create.write(_from, _to, presenter_uuid, description, language, session_uuid, hashtags)
     return result
 
 
 def edit(data):
-    if is_valid_uuid(data['sessionUUID']):
-        sessionUUID = data['sessionUUID']
-        name = data['name']
-        category = data['category']
-        hashtags = data['hashtags']
-        description = data['description']
-        creatorUUID = data['creator_uuid']
-        result = update.edit(sessionUUID, name, category, hashtags, description, creatorUUID)
+    if is_valid_uuid(data['liveUUID']):
+        liveUUID = data['liveUUID']
+        lives = data['live']
+        _from = lives['from']
+        _to = data['to']
+        presenter_uuid = lives['presenter_uuid']
+        description = lives['description']
+        language = lives['language']
+        session_uuid = data['session_uuid']
+        hashtags = lives['hashtags']
+        result = update.edit(liveUUID, _from, _to, presenter_uuid, description, language, session_uuid, hashtags)
         return result
     else:
-        raise InvalidUUIDException('Invalid UUID supplied')
+        raise InvalidUUIDException({'error': 'Invalid UUID supplied'})
 
 
 def get(liveUUID):

@@ -15,7 +15,7 @@ def delete(liveUUID):
         live = session.query(t_live).filter(t_live.UUID == liveUUID).delete()
         session.commit()
         if live:
-            return {'session_uuid': liveUUID + ' successfully deleted'}
+            return {'live_uuid': liveUUID + ' successfully deleted'}
 
     except exc.NoResultFound as ex:
         print(str(ex))
