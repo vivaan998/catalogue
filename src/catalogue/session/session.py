@@ -4,7 +4,6 @@
 
 from .core import create, retrieve_data, delete_data, update
 from src.exc.app_exception import InvalidUUIDException
-import datetime
 from app import is_valid_uuid
 
 
@@ -14,8 +13,6 @@ def add(data):
     hashtags = data['hashtags']
     description = data['description']
     creatorUUID = data['creator_uuid']
-    createdTime = datetime.datetime.now()
-    lastUpdateDateTime = datetime.datetime.now()
     result = create.write(name, category, hashtags, description, creatorUUID, createdTime, lastUpdateDateTime)
     return result
 

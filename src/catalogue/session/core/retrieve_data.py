@@ -4,7 +4,7 @@ from src.exc.app_exception import NotFoundException, ServerException
 
 
 ##
-# ALL Categories based on language
+# Fetch Session based on UUID
 ##
 
 def read_session(sessionUUID):

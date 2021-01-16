@@ -5,7 +5,7 @@ from src.exc.app_exception import ServerException, NotFoundException
 
 
 ##
-# ALL Categories based on language
+# Update Session based on UUID
 ##
 
 def edit(sessionUUID, name, category, hashtags, description, creatorUUID):

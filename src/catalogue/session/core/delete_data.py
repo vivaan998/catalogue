@@ -4,7 +4,7 @@ from src.exc.app_exception import NotFoundException, ServerException
 
 
 ##
-# ALL Categories based on language
+# Delete Session based on UUID
 ##
 
 def delete(sessionUUID):

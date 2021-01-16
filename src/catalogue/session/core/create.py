@@ -9,15 +9,12 @@ import uuid
 from src.exc.app_exception import IntegrityException, ServerException
 
 
-def _populate_session_model(table_type, name, category, creatorUUID, createdTime, lastUpdateDateTime, description,
-                            languageISO):
+def _populate_session_model(table_type, name, category, creatorUUID, description, languageISO):
     new_uuid = str(uuid.uuid4())
     table = table_type(UUID=new_uuid)
     table.Name = name
     table.Category = category
     table.CreatorUUID = creatorUUID
-    table.CreationDateTime = createdTime
-    table.LastUpdateDatetime = lastUpdateDateTime
     table.Description = description
     table.LanguageISO = languageISO
     return table
@@ -43,18 +40,18 @@ def writeToSessionTag(session_UUID, hashtags, languageISO):
     except IntegrityError as ex:
         print(str(ex))
         sessionTag.rollback()
-        raise IntegrityException(str(ex))
+        raise IntegrityException({'error': str(ex)})
     except Exception as ex:
         print(str(ex))
         sessionTag.rollback()
-        raise ServerException(str(ex))
+        raise ServerException({'error': str(ex)})
 
 
-def write(name, category, hashtags, description, creatorUUID, createdTime, lastUpdateDateTime):
+def write(name, category, hashtags, description, creatorUUID):
     db_instance = Db()
     session_table = db_instance.model.Session
-    sql_session_table = _populate_session_model(session_table, name, category['uuid'], creatorUUID, createdTime,
-                                                lastUpdateDateTime, description['value'], description['code'])
+    sql_session_table = _populate_session_model(session_table, name, category['uuid'], creatorUUID,
+                                                description['value'], description['code'])
     session = db_instance.session
     try:
         session.add(sql_session_table)
