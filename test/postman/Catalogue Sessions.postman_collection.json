@@ -1,0 +1,127 @@
+{
+	"info": {
+		"_postman_id": "643b9171-ca2a-4e11-b3d6-f2dbe767ca66",
+		"name": "Catalogue Sessions",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Sessions based on ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/sessions/?session_uuid=8d9da9ec-154b-4f8a-af6d-751551434dfc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"sessions",
+						""
+					],
+					"query": [
+						{
+							"key": "session_uuid",
+							"value": "8d9da9ec-154b-4f8a-af6d-751551434dfc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Session",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"First Session\",\n  \"category\": {\n    \"value\": \"fitness\",\n    \"uuid\": \"f0c9011b-ff53-4cad-a747-2233fb343661\"\n  },\n  \"hashtags\": [\n    \"#bestof2021\", \"#fitIndia\"\n  ],\n  \"description\": {\n    \"value\": \"Get Fit in 2021\",\n    \"code\": \"en\"\n  },\n  \"creator_uuid\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n  \"tokens\": 0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/v1/sessions/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"sessions",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Session",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"sessionUUID\": \"15d0c196-1981-43d9-a16e-d767e058849a\",  \n  \"name\": \"Second Session\",\n  \"category\": {\n    \"value\": \"fitness\",\n    \"uuid\": \"f0c9011b-ff53-4cad-a747-2233fb343661\"\n  },\n  \"hashtags\": [\n    \"#bestof2021\", \"#fitIndia, #truemotivation\"\n  ],\n  \"description\": {\n    \"value\": \"Get Fit in 2022\",\n    \"code\": \"en\"\n  },\n  \"creator_uuid\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n  \"tokens\": 0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/v1/sessions/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"sessions",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Session",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/sessions/?session_uuid=8d9da9ec-154b-4f8a-af6d-751551434dfc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"sessions",
+						""
+					],
+					"query": [
+						{
+							"key": "session_uuid",
+							"value": "8d9da9ec-154b-4f8a-af6d-751551434dfc"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
