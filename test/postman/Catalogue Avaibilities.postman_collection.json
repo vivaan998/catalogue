@@ -1,0 +1,108 @@
+{
+	"info": {
+		"_postman_id": "123b9171-ca2a-4e11-b3d6-f2dbe767ca66",
+		"name": "Catalogue Avaibilities",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Avaibility based on ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/avaibilities/2bd7b9a9-d0a4-4967-bba0-4d1c79c3cbe9",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"avaibilities",
+						"2bd7b9a9-d0a4-4967-bba0-4d1c79c3cbe9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Avaibilities",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw" : "{\n \"ref_uuid\": \"2bd7b9a9-d0a4-4967-bba0-4d1c79c3cbe9\", \n \"max_slots\": \"100\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/v1/avaibilities/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"avaibilities",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch Avaibilities for cancel booking",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/avaibilities/2bd7b9a9-d0a4-4967-bba0-4d1c79c3cbe9/increase",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"avaibilities",
+						"2bd7b9a9-d0a4-4967-bba0-4d1c79c3cbe9",
+						"increase"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch Avaibilities for booking",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/avaibilities/2bd7b9a9-d0a4-4967-bba0-4d1c79c3cbe9/decrease",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"avaibilities",
+						"2bd7b9a9-d0a4-4967-bba0-4d1c79c3cbe9",
+						"decrease"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

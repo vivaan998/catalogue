@@ -18,7 +18,7 @@ def is_valid_uuid(val):
 def add(data):
     lives = data['live']
     _from = lives['from']
-    _to = data['to']
+    _to = lives['to']
     presenter_uuid = lives['presenter_uuid']
     description = lives['description']
     language = lives['language']
@@ -33,7 +33,7 @@ def edit(data):
         liveUUID = data['liveUUID']
         lives = data['live']
         _from = lives['from']
-        _to = data['to']
+        _to = lives['to']
         presenter_uuid = lives['presenter_uuid']
         description = lives['description']
         language = lives['language']

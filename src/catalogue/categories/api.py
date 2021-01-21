@@ -20,6 +20,7 @@ def before_request_func():
 
 @bp_categories.route('/', methods=['GET'])
 def get():
+    print('>>>>>>>>>>>>>>>>>>>>>>>>>>>> here in category test')
     if 'language' in request.args:
         languageISO = request.args.get('language')
         category = categories.get(languageISO)

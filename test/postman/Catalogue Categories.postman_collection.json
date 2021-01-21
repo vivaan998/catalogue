@@ -32,6 +32,34 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Get Category based on language",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/categories/?language=fr",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"categories",
+						""
+					],
+					"query": [
+						{
+							"key": "language",
+							"value": "fr"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

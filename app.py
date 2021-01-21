@@ -3,6 +3,7 @@ from src.dal.db import Db
 from src.catalogue.session.api import bp_session
 from src.catalogue.categories.api import bp_categories
 from src.catalogue.live.api import bp_live
+from src.catalogue.availability.api import bp_avaibility
 import config
 
 from src.exc.app_exception import AppException
@@ -13,7 +14,7 @@ app.config.from_object(config.Config)
 app.register_blueprint(bp_session, url_prefix='/api/v1/sessions')
 app.register_blueprint(bp_categories, url_prefix='/api/v1/categories')
 app.register_blueprint(bp_live, url_prefix='/api/v1/lives')
-
+app.register_blueprint(bp_avaibility, url_prefix='/api/v1/avaibilities')
 
 # TODO-2: create and register the new endpoints
 
@@ -53,4 +54,4 @@ def init_app(flask_app):
 
 if __name__ == '__main__':
     init_app(app)
-    app.run(host='0.0.0.0', port='5000')
+    app.run(host='127.0.0.1', port='5000')

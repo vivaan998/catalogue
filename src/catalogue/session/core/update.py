@@ -13,13 +13,13 @@ def edit(sessionUUID, name, category, hashtags, description, creatorUUID):
     session = db_instance.session
     t_session = db_instance.model.Session
     t_sessionTag = db_instance.model.SessionTag
-
+    print('>>>>>>>>>>> session UUID : ', sessionUUID)
     try:
         sessions = session.query(t_session).filter(t_session.UUID == sessionUUID,
                                                    t_session.CreatorUUID == creatorUUID).update(
             {
                 'Name': name,
-                'Category': category['value'],
+                'Category': category['uuid'],
                 'LastUpdateDatetime': datetime.datetime.now(),
                 'LanguageISO': description['code'],
                 'Description': description['value'],

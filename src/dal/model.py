@@ -48,7 +48,7 @@ class Live(Base):
     Session = relationship('Session')
 
 
-class Availability(Live):
+class Availability(Base):
     __tablename__ = 'Availability'
 
     LiveUUID = Column(ForeignKey('Live.UUID', ondelete='CASCADE'), primary_key=True)

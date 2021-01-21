@@ -48,7 +48,7 @@ def read_lives():
         lives = session.query(t_live).all()
         for live in lives:
             hashtags = session.query(t_liveTag).filter(t_liveTag.LiveUUID == live.UUID).one()
-            sessions = session.query(t_session).filter(t_session.UUID == lives.SessionUUID).one()
+            sessions = session.query(t_session).filter(t_session.UUID == live.SessionUUID).one()
             result = {
                         'from': live.StartAtGMT,
                         'to': live.EndsAtGMT,
