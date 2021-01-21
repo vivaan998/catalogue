@@ -36,7 +36,7 @@ def edit(data):
         result = update.edit(sessionUUID, name, category, hashtags, description, creatorUUID)
         return result
     else:
-        raise InvalidUUIDException({'error': 'Invalid UUID supplied'})
+        raise InvalidUUIDException('Invalid UUID supplied')
 
 
 def get(sessionUUID):
@@ -45,7 +45,7 @@ def get(sessionUUID):
         sessions = retrieve_data.read_session(sessionUUID)
         return sessions
     else:
-        raise InvalidUUIDException({'error': 'Invalid UUID supplied'})
+        raise InvalidUUIDException('Invalid UUID supplied')
 
 
 def delete(sessionUUID):
@@ -53,4 +53,4 @@ def delete(sessionUUID):
         result = delete_data.delete(sessionUUID)
         return result
     else:
-        raise InvalidUUIDException({'error': 'Invalid UUID supplied'})
+        raise InvalidUUIDException('Invalid UUID supplied')

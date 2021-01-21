@@ -47,4 +47,4 @@ def delete():
         lives = live.delete(liveUUID)
         return make_response(jsonify(lives), 200)
     else:
-        raise MissingFieldException({'error': 'Session ID in the query'})
+        raise MissingFieldException('Session ID in the query')

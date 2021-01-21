@@ -40,11 +40,11 @@ def writeToSessionTag(session_UUID, hashtags, languageISO):
     except IntegrityError as ex:
         print(str(ex))
         sessionTag.rollback()
-        raise IntegrityException({'error': str(ex)})
+        raise IntegrityException(str(ex))
     except Exception as ex:
         print(str(ex))
         sessionTag.rollback()
-        raise ServerException({'error': str(ex)})
+        raise ServerException(str(ex))
 
 
 def write(name, category, hashtags, description, creatorUUID):
@@ -63,8 +63,8 @@ def write(name, category, hashtags, description, creatorUUID):
     except IntegrityError as ex:
         print(str(ex))
         session.rollback()
-        raise IntegrityException({'error': str(ex)})
+        raise IntegrityException(str(ex))
     except Exception as ex:
         print(str(ex))
         session.rollback()
-        raise ServerException({'error': str(ex)})
+        raise ServerException(str(ex))

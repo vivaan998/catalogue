@@ -19,7 +19,7 @@ def delete(liveUUID):
 
     except exc.NoResultFound as ex:
         print(str(ex))
-        return NotFoundException({'error': str(ex)})
+        return NotFoundException('Live Id ' + liveUUID + " not found")
     except Exception as ex:
         print(str(ex))
-        return ServerException({'error': str(ex)})
+        return ServerException(str(ex))

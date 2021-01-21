@@ -4,25 +4,24 @@ from src.exc.app_exception import NotFoundException, ServerException
 
 
 ##
-# Fetch Session based on UUID
+# Fetch availabilities based on UUID
 ##
 
-def read_avaibility(liveUUID):
+def read_availability(liveUUID):
     db_instance = Db()
-    avaibility = db_instance.session
-    t_avaibility = db_instance.model.Availability
+    availability = db_instance.session
+    t_availability = db_instance.model.Availability
     try:
         results = dict()
-        avaibilities = avaibility.query(t_avaibility).filter(t_avaibility.LiveUUID == liveUUID).one()
-        results['ref_uuid'] = avaibilities.LiveUUID
-        results['max_slots'] = avaibilities.MaxSlots
-        results['booked_slots'] = avaibilities.BookedSlots
+        availabilities = availability.query(t_availability).filter(t_availability.LiveUUID == liveUUID).one()
+        results['ref_uuid'] = availabilities.LiveUUID
+        results['max_slots'] = availabilities.MaxSlots
+        results['booked_slots'] = availabilities.BookedSlots
         return results
 
     except exc.NoResultFound as ex:
         print(str(ex))
-        raise NotFoundException({'error': str(ex)})
-
+        raise NotFoundException(liveUUID + ' Live ID not found')
     except Exception as ex:
         print(str(ex))
-        raise ServerException({'error': str(ex)})
+        raise ServerException(str(ex))

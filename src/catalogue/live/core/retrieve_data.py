@@ -30,11 +30,10 @@ def read_live(liveUUID):
 
     except exc.NoResultFound as ex:
         print(str(ex))
-        raise NotFoundException({'error': str(ex)})
-
+        raise NotFoundException('Live Id ' + liveUUID + " not found")
     except Exception as ex:
         print(str(ex))
-        raise ServerException({'error': str(ex)})
+        raise ServerException(str(ex))
 
 
 def read_lives():
@@ -46,26 +45,23 @@ def read_lives():
     try:
         results = []
         lives = session.query(t_live).all()
-        for live in lives:
-            hashtags = session.query(t_liveTag).filter(t_liveTag.LiveUUID == live.UUID).one()
-            sessions = session.query(t_session).filter(t_session.UUID == live.SessionUUID).one()
-            result = {
-                        'from': live.StartAtGMT,
-                        'to': live.EndsAtGMT,
-                        'hashtags': hashtags.Hashtag.split(','),
-                        'description': live.Description,
-                        'uuid': live.UUID,
-                        'language': live.LanguageISO,
-                        'session_uuid': sessions.UUID,
-                        'streaming_uuid': 'ASK'
-                    }
-            results.append(result)
+        if lives:
+            for live in lives:
+                hashtags = session.query(t_liveTag).filter(t_liveTag.LiveUUID == live.UUID).one()
+                sessions = session.query(t_session).filter(t_session.UUID == live.SessionUUID).one()
+                result = {
+                            'from': live.StartAtGMT,
+                            'to': live.EndsAtGMT,
+                            'hashtags': hashtags.Hashtag.split(','),
+                            'description': live.Description,
+                            'uuid': live.UUID,
+                            'language': live.LanguageISO,
+                            'session_uuid': sessions.UUID,
+                            'streaming_uuid': 'ASK'
+                        }
+                results.append(result)
         return results
-
-    except exc.NoResultFound as ex:
-        print(str(ex))
-        raise NotFoundException({'error': str(ex)})
 
     except Exception as ex:
         print(str(ex))
-        raise ServerException({'error': str(ex)})
+        raise ServerException(str(ex))

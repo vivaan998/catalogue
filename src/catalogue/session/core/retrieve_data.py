@@ -36,8 +36,7 @@ def read_session(sessionUUID):
 
     except exc.NoResultFound as ex:
         print(str(ex))
-        raise NotFoundException({'error': str(ex)})
-
+        raise NotFoundException('Session Id ' + sessionUUID + " not found")
     except Exception as ex:
         print(str(ex))
-        raise ServerException({'error': str(ex)})
+        raise ServerException(str(ex))

@@ -19,7 +19,7 @@ def delete(sessionUUID):
 
     except exc.NoResultFound as ex:
         print(str(ex))
-        return NotFoundException({'error': str(ex)})
+        return NotFoundException('Session Id ' + sessionUUID + " not found")
     except Exception as ex:
         print(str(ex))
-        return ServerException({'error': str(ex)})
+        return ServerException(str(ex))

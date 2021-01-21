@@ -41,11 +41,11 @@ def writeToLiveTag(live_UUID, hashtags, languageISO):
     except IntegrityError as ex:
         print(str(ex))
         liveTag.rollback()
-        raise IntegrityException({'error': str(ex)})
+        raise IntegrityException(str(ex))
     except Exception as ex:
         print(str(ex))
         liveTag.rollback()
-        raise ServerException({'error': str(ex)})
+        raise ServerException(str(ex))
 
 
 def write(_from, _to, presenter_uuid, description, language, session_uuid, hashtags):
@@ -64,8 +64,8 @@ def write(_from, _to, presenter_uuid, description, language, session_uuid, hasht
     except IntegrityError as ex:
         print(str(ex))
         session.rollback()
-        raise IntegrityException({'error': str(ex)})
+        raise IntegrityException('Request data not in proper format')
     except Exception as ex:
         print(str(ex))
         session.rollback()
-        raise ServerException({'error': str(ex)})
+        raise ServerException(str(ex))

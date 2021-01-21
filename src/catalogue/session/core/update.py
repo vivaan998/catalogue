@@ -1,7 +1,7 @@
 from sqlalchemy.orm import exc
 from src.dal.db import Db
 import datetime
-from src.exc.app_exception import ServerException, NotFoundException
+from src.exc.app_exception import ServerException, NotFoundException, ConflictException
 
 
 ##
@@ -13,7 +13,6 @@ def edit(sessionUUID, name, category, hashtags, description, creatorUUID):
     session = db_instance.session
     t_session = db_instance.model.Session
     t_sessionTag = db_instance.model.SessionTag
-    print('>>>>>>>>>>> session UUID : ', sessionUUID)
     try:
         sessions = session.query(t_session).filter(t_session.UUID == sessionUUID,
                                                    t_session.CreatorUUID == creatorUUID).update(
@@ -30,15 +29,19 @@ def edit(sessionUUID, name, category, hashtags, description, creatorUUID):
             'LanguageISO': description['code']
         })
 
-        session.commit()
-
         if sessions and hashSessions:
+            session.commit()
             return {'session_uuid': sessionUUID + ' successfully updated'}
-
+        else:
+            raise ConflictException('There are conflicts with the requested Id ' + sessionUUID)
+    except ConflictException as ex:
+        print(str(ex))
+        session.rollback()
+        raise ConflictException(str(ex))
     except exc.NoResultFound as ex:
         print(str(ex))
-        raise NotFoundException({'error': str(ex)})
+        raise NotFoundException(str(ex))
     except Exception as ex:
         print(str(ex))
         session.rollback()
-        raise ServerException({'error': str(ex)})
+        raise ServerException(str(ex))

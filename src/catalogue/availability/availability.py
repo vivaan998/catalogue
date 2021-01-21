@@ -13,13 +13,16 @@ def add(data):
     result = create.write(liveUUID, maxSlots)
     return result
 
+
 def get(liveUUID):
-    result = retrieve_data.read_avaibility(liveUUID)
+    result = retrieve_data.read_availability(liveUUID)
     return result
+
 
 def increase(liveUUID):
     result = patch_data.increaseBookSlot(liveUUID)
     return result
+
 
 def decrease(liveUUID):
     result = patch_data.decreaseBookSlot(liveUUID)

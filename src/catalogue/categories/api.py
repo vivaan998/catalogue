@@ -20,10 +20,9 @@ def before_request_func():
 
 @bp_categories.route('/', methods=['GET'])
 def get():
-    print('>>>>>>>>>>>>>>>>>>>>>>>>>>>> here in category test')
     if 'language' in request.args:
         languageISO = request.args.get('language')
         category = categories.get(languageISO)
         return make_response(jsonify(category), 200)
     else:
-        raise MissingFieldException({'error': 'Language in the query parameter'})
+        raise MissingFieldException('Language in the query parameter')

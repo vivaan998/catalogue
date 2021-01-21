@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "572909cc-aafe-4019-b481-5ba94b098e3e",
+		"_postman_id": "da62f48f-70b6-4926-9ec8-ee26258d2098",
 		"name": "Catalogue Live",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -93,7 +93,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"liveUUID\": \"0db27595-375e-4b9d-b3a3-790da3010888\",\n    \"live\": {\n            \"from\": \"2021-02-17 18:25:14.832\",\n            \"to\": \"2021-02-17 20:25:14.832\",\n            \"presenter_uuid\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n            \"description\": \"Live Update\",\n        \"hashtags\": [\"city\", \"state\"],\n            \"language\": \"en\"\n        },\n    \"session_uuid\": \"8d9da9ec-154b-4f8a-af6d-751551434dfc\"\n}",
+					"raw": "{\n    \"liveUUID\": \"80f9f1e8-77a8-40ae-bfe8-e3c1ee0fade8\",\n    \"live\": {\n            \"from\": \"2021-02-17 18:25:14.832\",\n            \"to\": \"2021-02-17 20:25:14.832\",\n            \"presenter_uuid\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n            \"description\": \"Live Update\",\n        \"hashtags\": [\"city\", \"state\"],\n            \"language\": \"en\"\n        },\n    \"session_uuid\": \"8d9da9ec-154b-4f8a-af6d-751551434dfc\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"

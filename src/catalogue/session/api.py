@@ -40,7 +40,7 @@ def get():
         sessions = session.get(sessionUUID)
         return make_response(jsonify(sessions), 200)
     else:
-        raise MissingFieldException({'error': 'Session ID in the query'})
+        raise MissingFieldException('Session ID in the query')
 
 
 @bp_session.route('/', methods=['DELETE'])
@@ -50,4 +50,4 @@ def delete():
         sessions = session.delete(sessionUUID)
         return make_response(jsonify(sessions), 200)
     else:
-        raise MissingFieldException({'error': 'Session ID in the query'})
+        raise MissingFieldException('Session ID in the query')

@@ -18,8 +18,7 @@ def read_categories(category_languageISO):
 
     except exc.NoResultFound as ex:
         print(str(ex))
-        raise NotFoundException({'error': str(ex)})
-
+        raise NotFoundException('No categories found with ' + category_languageISO)
     except Exception as ex:
         print(str(ex))
-        raise ServerException({'error': str(ex)})
+        raise ServerException(str(ex))

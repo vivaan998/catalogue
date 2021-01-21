@@ -51,7 +51,7 @@ def get(liveUUID):
         live = retrieve_data.read_live(liveUUID)
         return live
     else:
-        raise InvalidUUIDException({'error': 'Invalid UUID supplied'})
+        raise InvalidUUIDException('Invalid UUID supplied')
 
 
 def delete(liveUUID):
@@ -59,7 +59,7 @@ def delete(liveUUID):
         result = delete_data.delete(liveUUID)
         return result
     else:
-        raise InvalidUUIDException({'error': 'Invalid UUID supplied'})
+        raise InvalidUUIDException('Invalid UUID supplied')
 
 
 def get_lives():

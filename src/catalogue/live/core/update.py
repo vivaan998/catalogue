@@ -1,7 +1,7 @@
 from sqlalchemy.orm import exc
 from src.dal.db import Db
 import datetime
-from src.exc.app_exception import ServerException, NotFoundException
+from src.exc.app_exception import ServerException, NotFoundException, ConflictException
 
 
 ##
@@ -30,15 +30,20 @@ def edit(liveUUID, _from, _to, presenter_uuid, description, language, session_uu
             'LanguageISO': language
         })
 
-        session.commit()
-
         if lives and hashLives:
+            session.commit()
             return {'live_uuid': liveUUID + ' successfully updated'}
+        else:
+            raise ConflictException('There are conflicts with the requested Id ' + liveUUID)
 
+    except ConflictException as ex:
+        print(str(ex))
+        session.rollback()
+        raise ConflictException(str(ex))
     except exc.NoResultFound as ex:
         print(str(ex))
-        raise NotFoundException({'error': str(ex)})
+        raise NotFoundException(str(ex))
     except Exception as ex:
         print(str(ex))
         session.rollback()
-        raise ServerException({'error': str(ex)})
+        raise ServerException(str(ex))
