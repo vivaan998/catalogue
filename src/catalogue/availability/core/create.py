@@ -8,7 +8,7 @@ from src.dal.db import Db
 from src.exc.app_exception import IntegrityException, ServerException
 
 
-def _populate_avaibility_model(table_type, uuid, maxSlots, bookedSlots):
+def _populate_availability_model(table_type, uuid, maxSlots, bookedSlots):
     table = table_type(LiveUUID=uuid)
     table.MaxSlots = maxSlots
     table.BookedSlots = bookedSlots  # initially booked slots will 0
@@ -18,7 +18,7 @@ def _populate_avaibility_model(table_type, uuid, maxSlots, bookedSlots):
 def write(liveUUID, maxSlots):
     db_instance = Db()
     availability_table = db_instance.model.Availability
-    sql_availability_table = _populate_avaibility_model(availability_table, liveUUID, maxSlots, 0)
+    sql_availability_table = _populate_availability_model(availability_table, liveUUID, maxSlots, 0)
     availability = db_instance.session
     try:
         availability.add(sql_availability_table)

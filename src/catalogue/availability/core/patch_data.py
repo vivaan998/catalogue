@@ -9,7 +9,7 @@ from .retrieve_data import read_availability
 # Update available slots based on liveUUID
 ##
 
-# increaseBookSlot means cancelation of booking
+# IncreaseBookSlot means cancellation of booking
 def increaseBookSlot(liveUUID):
     db_instance = Db()
     availability = db_instance.session
@@ -43,7 +43,7 @@ def increaseBookSlot(liveUUID):
         raise ServerException(str(ex))
 
 
-# decreaseBookSlot means cancellation of booking
+# DecreaseBookSlot means cancellation of booking
 def decreaseBookSlot(liveUUID):
     db_instance = Db()
     availability = db_instance.session

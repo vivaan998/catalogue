@@ -19,7 +19,7 @@ put_params = {
         "to": "2021-03-17 21:25:14.83",
         "presenter_uuid": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
         "description": "Unit Test",
-        "hashtags": ["wokring","#updated"],
+        "hashtags": ["working", "#updated"],
         "language": "en"
     },
     "liveUUID": "c1e49034-3a74-4f02-b896-a4d0b2b8f215",
