@@ -29,7 +29,7 @@ CREATE TABLE `Availability` (
   `LastUpdateDatetime` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`LiveUUID`),
   CONSTRAINT `FK_AVL_LiveUUID` FOREIGN KEY (`LiveUUID`) REFERENCES `Live` (`UUID`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -54,7 +54,7 @@ CREATE TABLE `Categories` (
   `LanguageISO` varchar(36) NOT NULL,
   `Value` text,
   PRIMARY KEY (`UUID`,`LanguageISO`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -80,7 +80,7 @@ CREATE TABLE `Image` (
   `Title` varchar(256) DEFAULT NULL,
   `Description` text,
   PRIMARY KEY (`RefUUID`,`Uri`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -112,7 +112,7 @@ CREATE TABLE `Live` (
   PRIMARY KEY (`UUID`),
   KEY `FK_L_SessionUUID` (`SessionUUID`),
   CONSTRAINT `FK_L_SessionUUID` FOREIGN KEY (`SessionUUID`) REFERENCES `Session` (`UUID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -138,7 +138,7 @@ CREATE TABLE `LiveTag` (
   `LanguageISO` varchar(2) DEFAULT NULL,
   PRIMARY KEY (`LiveUUID`),
   CONSTRAINT `FK_LT_LiveUUID` FOREIGN KEY (`LiveUUID`) REFERENCES `Live` (`UUID`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -170,7 +170,7 @@ CREATE TABLE `Session` (
   PRIMARY KEY (`UUID`),
   KEY `FK_Session` (`Category`),
   CONSTRAINT `FK_Session` FOREIGN KEY (`Category`) REFERENCES `Categories` (`UUID`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -196,7 +196,7 @@ CREATE TABLE `SessionTag` (
   `LanguageISO` varchar(2) DEFAULT NULL,
   PRIMARY KEY (`SessionUUID`),
   CONSTRAINT `FK_STSessionUUID` FOREIGN KEY (`SessionUUID`) REFERENCES `Session` (`UUID`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

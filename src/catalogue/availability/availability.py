@@ -3,8 +3,6 @@
 # TODO-1: Perform unit test on the methods exposed here
 
 from .core import create, retrieve_data, patch_data
-from src.exc.app_exception import InvalidUUIDException
-import uuid
 
 
 def add(data):

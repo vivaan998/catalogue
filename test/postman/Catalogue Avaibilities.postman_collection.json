@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "123b9171-ca2a-4e11-b3d6-f2dbe767ca66",
-		"name": "Catalogue Avaibilities",
+		"name": "Catalogue availabilities",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -11,7 +11,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5000/api/v1/avaibilities/2bd7b9a9-d0a4-4967-bba0-4d1c79c3cbe9",
+					"raw": "http://localhost:5000/api/v1/availabilities/2bd7b9a9-d0a4-4967-bba0-4d1c79c3cbe9",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -20,7 +20,7 @@
 					"path": [
 						"api",
 						"v1",
-						"avaibilities",
+						"availabilities",
 						"2bd7b9a9-d0a4-4967-bba0-4d1c79c3cbe9"
 					]
 				}
@@ -28,7 +28,7 @@
 			"response": []
 		},
 		{
-			"name": "Post Avaibilities",
+			"name": "Post availabilities",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -42,7 +42,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5000/api/v1/avaibilities/",
+					"raw": "http://localhost:5000/api/v1/availabilities/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -51,7 +51,7 @@
 					"path": [
 						"api",
 						"v1",
-						"avaibilities",
+						"availabilities",
 						""
 					]
 				}
@@ -59,12 +59,12 @@
 			"response": []
 		},
 		{
-			"name": "Patch Avaibilities for cancel booking",
+			"name": "Patch availabilities for cancel booking",
 			"request": {
 				"method": "PATCH",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5000/api/v1/avaibilities/2bd7b9a9-d0a4-4967-bba0-4d1c79c3cbe9/increase",
+					"raw": "http://localhost:5000/api/v1/availabilities/2bd7b9a9-d0a4-4967-bba0-4d1c79c3cbe9/increase",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -73,7 +73,7 @@
 					"path": [
 						"api",
 						"v1",
-						"avaibilities",
+						"availabilities",
 						"2bd7b9a9-d0a4-4967-bba0-4d1c79c3cbe9",
 						"increase"
 					]
@@ -82,12 +82,12 @@
 			"response": []
 		},
 		{
-			"name": "Patch Avaibilities for booking",
+			"name": "Patch availabilities for booking",
 			"request": {
 				"method": "PATCH",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5000/api/v1/avaibilities/2bd7b9a9-d0a4-4967-bba0-4d1c79c3cbe9/decrease",
+					"raw": "http://localhost:5000/api/v1/availabilities/2bd7b9a9-d0a4-4967-bba0-4d1c79c3cbe9/decrease",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -96,7 +96,7 @@
 					"path": [
 						"api",
 						"v1",
-						"avaibilities",
+						"availabilities",
 						"2bd7b9a9-d0a4-4967-bba0-4d1c79c3cbe9",
 						"decrease"
 					]
