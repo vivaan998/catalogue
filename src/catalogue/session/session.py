@@ -54,3 +54,8 @@ def delete(sessionUUID):
         return result
     else:
         raise InvalidUUIDException('Invalid UUID supplied')
+
+
+def get_sessions(search):
+    sessions = retrieve_data.read_sessions(search)
+    return sessions

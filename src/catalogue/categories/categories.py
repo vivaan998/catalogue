@@ -5,13 +5,13 @@
 from .core import retrieve_data
 
 
-def get(languageISO):
-    categories = retrieve_data.read_categories(languageISO)
+def get(languageISO, search):
+    categories = retrieve_data.read_categories(languageISO, search)
     results = list()
-
-    for category in categories:
-        results.append({
-            'UUID': category.UUID,
-            'value': category.Value
-        })
+    if len(categories) != 0:
+        for category in categories:
+            results.append({
+                'UUID': category.UUID,
+                'value': category.Value
+            })
     return results

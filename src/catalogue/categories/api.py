@@ -7,6 +7,7 @@ from flask import request
 from flask import jsonify
 from . import categories
 from flask import g
+from src.dal.pagination import get_paginated_list
 from src.exc.app_exception import MissingFieldException
 
 bp_categories = Blueprint('categories', 'categories')
@@ -20,9 +21,15 @@ def before_request_func():
 
 @bp_categories.route('/', methods=['GET'])
 def get():
-    if 'language' in request.args:
+    url = request.url
+    start = request.args.get('start', 1)
+    limit = request.args.get('limit', 1)
+    search = request.args.get('search', None)
+    if 'language' in request.args or 'search' in request.args:
         languageISO = request.args.get('language')
-        category = categories.get(languageISO)
-        return make_response(jsonify(category), 200)
+        category = categories.get(languageISO, search)
+        return make_response(jsonify(get_paginated_list(category, url, start, limit)), 200)
     else:
         raise MissingFieldException('Language in the query parameter')
+
+

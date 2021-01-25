@@ -7,7 +7,9 @@ from flask import request
 from flask import jsonify
 from . import session
 from flask import g
+from flask_paginate import Pagination, get_page_parameter
 from src.exc.app_exception import MissingFieldException
+from ...dal.pagination import get_paginated_list
 
 bp_session = Blueprint('session', 'session')
 
@@ -35,12 +37,17 @@ def update():
 
 @bp_session.route('/', methods=['GET'])
 def get():
+    url = request.url
+    start = request.args.get('start', 1)
+    limit = request.args.get('limit', 1)
+    search = request.args.get('search', None)
     if 'session_uuid' in request.args:
         sessionUUID = request.args.get('session_uuid')
         sessions = session.get(sessionUUID)
-        return make_response(jsonify(sessions), 200)
+        return make_response(jsonify(get_paginated_list(sessions, url, start, limit)), 200)
     else:
-        raise MissingFieldException('Session ID in the query')
+        sessions = session.get_sessions(search)
+        return make_response(jsonify(get_paginated_list(sessions, url, start, limit)), 200)
 
 
 @bp_session.route('/', methods=['DELETE'])
