@@ -42,3 +42,8 @@ def delete(liveUUID):
 def get_lives(search):
     lives = retrieve_data.read_lives(search)
     return lives
+
+
+def get_by_user(user_uuid, search):
+    lives = retrieve_data.read_lives_by_users(user_uuid, search)
+    return lives

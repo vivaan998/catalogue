@@ -1,7 +1,8 @@
-from sqlalchemy.orm import exc
+from sqlalchemy.orm import exc, Load
 from sqlalchemy import or_
 from src.dal.db import Db
 from src.exc.app_exception import NotFoundException, ServerException
+from sqlalchemy.orm import joinedload
 
 
 ##
@@ -15,16 +16,17 @@ def read_session(sessionUUID):
     t_session_tag = db_instance.model.SessionTag
     t_category = db_instance.model.Categories
     try:
+        query = session.query(t_session).join(t_session_tag).join(t_category)
         results = dict()
-        sessions = session.query(t_session).filter(t_session.UUID == sessionUUID).one()
-        hashtags = session.query(t_session_tag).filter(t_session_tag.SessionUUID == sessionUUID).one()
-        category = session.query(t_category).filter(t_category.UUID == sessions.Category).one()
+        sessions = query.filter(t_session.UUID == sessionUUID).one()
+        hashtags = sessions.SessionTag
+        category = sessions.Categories
         results['name'] = sessions.Name
         results['category'] = {
             'value': category.Value,
             'UUID': category.UUID
         }
-        results['hashtags'] = hashtags.Hashtag.split(',') if len(hashtags.Hashtag) > 0 else ''
+        results['hashtags'] = hashtags[0].Hashtag.split(',') if len(hashtags[0].Hashtag) > 0 else ''
         results['description'] = sessions.Description
         results['language_iso'] = sessions.LanguageISO
         results['creator_uuid'] = sessions.CreatorUUID
@@ -49,19 +51,20 @@ def read_sessions(search):
     t_category = db_instance.model.Categories
     try:
         results = []
+        query = session.query(t_session).join(t_session_tag).join(t_category)
         if search is None:
-            sessions = session.query(t_session).all()
+            sessions = query.all()
         else:
-            sessions = session.query(t_session).filter(or_(t_session.Name.contains(search),
-                                                           t_session.Description.contains(search)))
+            sessions = query.filter(or_(t_session.Name.contains(search), t_session.Description.contains(search),
+                                        t_session_tag.Hashtag.contains(search)))
         if sessions:
             for each_session in sessions:
-                hashtags = session.query(t_session_tag).filter(t_session_tag.SessionUUID == each_session.UUID).one()
-                category = session.query(t_category).filter(t_category.UUID == each_session.Category).one()
+                hashtags = each_session.SessionTag
+                category = each_session.Categories
                 result = {
                     'name': each_session.Name,
                     'category': {"value": category.Value, "UUID": category.UUID},
-                    'hashtags': hashtags.Hashtag.split(',') if len(hashtags.Hashtag) > 0 else '',
+                    'hashtags': hashtags[0].Hashtag.split(',') if len(hashtags[0].Hashtag) > 0 else '',
                     'description': each_session.Description,
                     'language_is': each_session.LanguageISO,
                     'creator_uuid': each_session.CreatorUUID,

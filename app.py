@@ -1,5 +1,4 @@
 import os
-import json
 
 from flask import Flask, make_response, jsonify, request
 from src.dal.db import Db
@@ -9,6 +8,7 @@ from src.catalogue.live.api import bp_live
 from src.catalogue.availability.api import bp_availability
 from src.exc.app_exception import AppException, ClientException, ServerException
 from flask import g
+import config
 from yaml import load, Loader, dump, Dumper
 from openapi_spec_validator.schemas import read_yaml_file
 
@@ -34,7 +34,6 @@ rs_validator = ResponseValidator(create_spec(spec_dict))
 
 # =====
 
-import config
 
 app = Flask(__name__)
 app.config.from_object(config.Config)
@@ -71,7 +70,7 @@ def before_request_func():
     print(fup)
     g.openapi_request.full_url_pattern = fup.rstrip('/')
 
-    # validate 
+    # validate
     result = rq_validator.validate(g.openapi_request)
     app.logger.info("List errors")
     app.logger.error(result.errors)
@@ -81,25 +80,25 @@ def before_request_func():
     app.logger.info("END: before_request")
 
 
-# @app.after_request
-# def after_request_func(response):
-#     app.logger.info("START: after_request")
-#     code = response.status_code
-#     app.logger.info("code: {0}".format(code))
-#
-#     if code == 200 or code == 201:
-#         app.logger.info("Build FlaskOpenAPIRequest")
-#         openapi_response = FlaskOpenAPIResponse(response)
-#         app.logger.info("Validate")
-#         result = rs_validator.validate(g.openapi_request, openapi_response)
-#         app.logger.info("List errors")
-#         app.logger.error(result.errors)
-#         if len(result.errors) > 0:
-#             response = make_response(jsonify("Response validation error" + str(result.errors)), 500)
-#
-#     # Db().session.remove()
-#     app.logger.info("END: after_request")
-#     return response
+@app.after_request
+def after_request_func(response):
+    app.logger.info("START: after_request")
+    code = response.status_code
+    app.logger.info("code: {0}".format(code))
+
+    if code == 200 or code == 201:
+        app.logger.info("Build FlaskOpenAPIRequest")
+        openapi_response = FlaskOpenAPIResponse(response)
+        app.logger.info("Validate")
+        result = rs_validator.validate(g.openapi_request, openapi_response)
+        app.logger.info("List errors")
+        app.logger.error(result.errors)
+        if len(result.errors) > 0:
+            response = make_response(jsonify("Response validation error" + str(result.errors)), 500)
+
+    # Db().session.remove()
+    app.logger.info("END: after_request")
+    return response
 
 
 def init_app(flask_app):

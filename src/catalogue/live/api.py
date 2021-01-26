@@ -50,3 +50,13 @@ def get():
 def delete(live_uuid):
     lives = live.delete(live_uuid)
     return make_response(jsonify(lives), 200)
+
+
+@bp_live.route('/user/<user_uuid>', methods=['GET'])
+def get_by_user(user_uuid):
+    url = request.url
+    start = request.args.get('start', 1)
+    limit = request.args.get('limit', 1)
+    search = request.args.get('search', None)
+    lives = live.get_by_user(user_uuid, search)
+    return make_response(jsonify(get_paginated_list(lives, url, start, limit)), 200)

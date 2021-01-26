@@ -39,14 +39,14 @@ def patch(ref_uuid, argument):
         if availabilities:
             return get(ref_uuid)
         else:
-            return make_response(jsonify("Cannot cancel as there are no booked slots"), 200)
+            return make_response(jsonify("Cannot cancel as there are no booked slots"), 400)
 
     elif argument == "decrease":
         availabilities = availability.decrease(ref_uuid)
         if availabilities:
             return get(ref_uuid)
         else:
-            return make_response(jsonify("All slots are booked"), 200)
+            return make_response(jsonify("All slots are booked"), 400)
 
     else:
         raise MissingFieldException('argument for bookings')

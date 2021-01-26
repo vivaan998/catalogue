@@ -40,7 +40,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5000/api/v1/lives/?search=liv",
+					"raw": "http://localhost:5000/api/v1/lives/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -51,12 +51,6 @@
 						"v1",
 						"lives",
 						""
-					],
-					"query": [
-						{
-							"key": "search",
-							"value": "liv"
-						}
 					]
 				}
 			},
@@ -147,6 +141,35 @@
 							"key": "",
 							"value": "",
 							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Live based on User",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/lives/user/3fa85f64-5717-4562-b3fc-2c963f66afa6?search=third",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"lives",
+						"user",
+						"3fa85f64-5717-4562-b3fc-2c963f66afa6"
+					],
+					"query": [
+						{
+							"key": "search",
+							"value": "third"
 						}
 					]
 				}

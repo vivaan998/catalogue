@@ -38,7 +38,8 @@ class Session(Base):
     Description = Column(Text)
     LanguageISO = Column(String(36), server_default='en')
 
-    Categories = relationship('Categories')
+    Categories = relationship('Categories', backref='Categories')
+    SessionTag = relationship('SessionTag', backref='SessionTag')
 
 
 class Live(Base):
@@ -54,7 +55,8 @@ class Live(Base):
     Description = Column(Text)
     LanguageISO = Column(String(36), server_default='en')
 
-    Session = relationship('Session')
+    Session = relationship('Session', backref='Session')
+    LiveTag = relationship('LiveTag', backref='LiveTag')
 
 
 class Availability(Base):
@@ -72,6 +74,7 @@ class SessionTag(Base):
     SessionUUID = Column(ForeignKey('Session.UUID', ondelete='CASCADE'), primary_key=True, nullable=False)
     Hashtag = Column(Text, primary_key=True, nullable=False)
     LanguageISO = Column(String(36), server_default='en')
+
     Session = relationship('Session')
 
 
