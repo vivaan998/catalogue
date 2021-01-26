@@ -26,7 +26,7 @@ get:
     - application/json
   responses:
     '200':
-      description: Live found 
+      description: 'Live found' 
       schema:
         type: array
         items:
@@ -36,7 +36,7 @@ get:
       schema: 
         $ref: '#/definitions/Message'
     '404':
-      description: Not found
+      description: 'Not found'
       schema: 
         $ref: '#/definitions/Message'
 

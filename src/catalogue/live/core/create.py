@@ -4,16 +4,18 @@
 # TODO-1: Finish the implementation of existing methods and add the new files / methods if needed
 
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy.orm import exc
+
 from src.dal.db import Db
 import uuid
-from src.exc.app_exception import IntegrityException, ServerException
+from src.exc.app_exception import IntegrityException, ServerException, ConflictException, NotFoundException
 
 
-def _populate_live_model(table_type, _from, _to, presenter_uuid, description, language, session_uuid):
+def _populate_live_model(table_type, dt_from, dt_to, presenter_uuid, description, language, session_uuid):
     new_uuid = str(uuid.uuid4())
     table = table_type(UUID=new_uuid)
-    table.StartAtGMT = _from
-    table.EndsAtGMT = _to
+    table.StartAtGMT = dt_from
+    table.EndsAtGMT = dt_to
     table.PresenterUUID = presenter_uuid
     table.SessionUUID = session_uuid
     table.Description = description
@@ -23,12 +25,12 @@ def _populate_live_model(table_type, _from, _to, presenter_uuid, description, la
 
 def _populate_liveTag_model(table_type, live_UUID, hashtags, languageISO):
     table = table_type(LiveUUID=live_UUID)
-    table.Hashtag = ','.join(hashtags)
+    table.Hashtag = ','.join(hashtags) if hashtags is not None else ''
     table.LanguageISO = languageISO
     return table
 
 
-def writeToLiveTag(live_UUID, hashtags, languageISO):
+def writedt_to_live_tag(live_UUID, hashtags, languageISO):
     db_instance = Db()
     liveTag_table = db_instance.model.LiveTag
     sql_liveTag_table = _populate_liveTag_model(liveTag_table, live_UUID, hashtags, languageISO)
@@ -48,19 +50,32 @@ def writeToLiveTag(live_UUID, hashtags, languageISO):
         raise ServerException(str(ex))
 
 
-def write(_from, _to, presenter_uuid, description, language, session_uuid, hashtags):
+def write(dt_from, dt_to, presenter_uuid, description, session_uuid, hashtags):
     db_instance = Db()
-    live_table = db_instance.model.Live
-    sql_live_table = _populate_live_model(live_table, _from, _to, presenter_uuid, description,
-                                          language, session_uuid)
     session = db_instance.session
+    live_table = db_instance.model.Live
+    session_table = db_instance.model.Session
+    try:
+        language = session.query(session_table).filter(session_table.UUID == session_uuid).one()
+    except exc.NoResultFound as ex:
+        print(str(ex))
+        session.rollback()
+        raise NotFoundException('No such session found with UUID: ' + session_uuid)
+
+    sql_live_table = _populate_live_model(live_table, dt_from, dt_to, presenter_uuid, description,
+                                          language.LanguageISO, session_uuid)
     try:
         session.add(sql_live_table)
-        session.commit()
-        insertToLiveTag = writeToLiveTag(sql_live_table.UUID, hashtags, language)
-        if insertToLiveTag:
+        if writedt_to_live_tag(sql_live_table.UUID, hashtags, language.LanguageISO):
+            session.commit()
             return {'live_uuid': sql_live_table.UUID}
+        else:
+            raise ConflictException('There are conflicts, please contact support')
 
+    except ConflictException as ex:
+        print(str(ex))
+        session.rollback()
+        raise ConflictException(str(ex))
     except IntegrityError as ex:
         print(str(ex))
         session.rollback()

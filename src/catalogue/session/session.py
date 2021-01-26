@@ -19,38 +19,38 @@ def add(data):
     name = data['name']
     category = data['category']
     hashtags = data['hashtags']
+    tokens = data['tokens']
     description = data['description']
-    creatorUUID = data['creator_uuid']
-    result = create.write(name, category, hashtags, description, creatorUUID)
+    language_iso = data['language_iso']
+    creator_uuid = data['creator_uuid']
+    result = create.write(name, category, hashtags, tokens, description, language_iso, creator_uuid)
     return result
 
 
-def edit(data):
-    if is_valid_uuid(data['sessionUUID']):
-        sessionUUID = data['sessionUUID']
-        name = data['name']
-        category = data['category']
-        hashtags = data['hashtags']
-        description = data['description']
-        creatorUUID = data['creator_uuid']
-        result = update.edit(sessionUUID, name, category, hashtags, description, creatorUUID)
-        return result
-    else:
-        raise InvalidUUIDException('Invalid UUID supplied')
+def edit(session_uuid, data):
+    name = data['name']
+    tokens = data['tokens']
+    category = data['category']
+    hashtags = data['hashtags']
+    description = data['description']
+    language_iso = data['language_iso']
+    creator_uuid = data['creator_uuid']
+    result = update.edit(session_uuid, name, tokens, category, hashtags, description, language_iso, creator_uuid)
+    return result
 
 
-def get(sessionUUID):
+def get(session_uuid):
     # UUID_PATTERN = re.compile(r'^[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}$', re.IGNORECASE)
-    if is_valid_uuid(sessionUUID):
-        sessions = retrieve_data.read_session(sessionUUID)
+    if is_valid_uuid(session_uuid):
+        sessions = retrieve_data.read_session(session_uuid)
         return sessions
     else:
         raise InvalidUUIDException('Invalid UUID supplied')
 
 
-def delete(sessionUUID):
-    if is_valid_uuid(sessionUUID):
-        result = delete_data.delete(sessionUUID)
+def delete(session_uuid):
+    if is_valid_uuid(session_uuid):
+        result = delete_data.delete(session_uuid)
         return result
     else:
         raise InvalidUUIDException('Invalid UUID supplied')
@@ -59,3 +59,7 @@ def delete(sessionUUID):
 def get_sessions(search):
     sessions = retrieve_data.read_sessions(search)
     return sessions
+
+
+def get_lives(session_uuid):
+    pass

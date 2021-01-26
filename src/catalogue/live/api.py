@@ -3,7 +3,7 @@ from flask import request
 from . import live
 from flask import g
 
-from src.exc.app_exception import MissingFieldException
+from ...dal.pagination import get_paginated_list
 
 bp_live = Blueprint('live', 'live')
 
@@ -22,29 +22,31 @@ def create():
     return make_response(jsonify(lives), 201)
 
 
-@bp_live.route('/', methods=['PUT'])
-def update():
+@bp_live.route('/<live_uuid>', methods=['PUT'])
+def update(live_uuid):
     data = request.get_json()
-    lives = live.edit(data)
-    return make_response(jsonify(lives), 202)
+    updated_live = live.update(live_uuid, data)
+    return make_response(jsonify(updated_live), 202)
+
+
+@bp_live.route('/<live_uuid>', methods=['GET'])
+def get_one(live_uuid):
+    lives = live.get(live_uuid)
+    return make_response(jsonify(lives), 200)
 
 
 @bp_live.route('/', methods=['GET'])
 def get():
-    if 'live_uuid' in request.args:
-        liveUUID = request.args.get('live_uuid')
-        lives = live.get(liveUUID)
-        return make_response(jsonify(lives), 200)
-    else:
-        lives = live.get_lives()
-        return make_response(jsonify(lives), 200)
+    # TODO: filter on the user
+    url = request.url
+    start = request.args.get('start', 1)
+    limit = request.args.get('limit', 1)
+    search = request.args.get('search', None)
+    lives = live.get_lives(search)
+    return make_response(jsonify(get_paginated_list(lives, url, start, limit)), 200)
 
 
-@bp_live.route('/', methods=['DELETE'])
-def delete():
-    if 'live_uuid' in request.args:
-        liveUUID = request.args.get('live_uuid')
-        lives = live.delete(liveUUID)
-        return make_response(jsonify(lives), 200)
-    else:
-        raise MissingFieldException('Session ID in the query')
+@bp_live.route('/<live_uuid>', methods=['DELETE'])
+def delete(live_uuid):
+    lives = live.delete(live_uuid)
+    return make_response(jsonify(lives), 200)

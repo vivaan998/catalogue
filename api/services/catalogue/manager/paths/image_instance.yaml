@@ -15,8 +15,8 @@ delete:
     - application/json
   responses:
     '201':
-      description: Image deleted 
+      description: "Image deleted" 
     '400':
-      description: Invalid UUID supplied
+      description: "Invalid UUID supplied"
       schema: 
         $ref: '#/definitions/Message'

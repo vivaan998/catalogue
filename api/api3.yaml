@@ -1,0 +1,851 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Flio API
+paths:
+  /categories:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Catalogue
+      summary: Fetch categories
+      description: Fetch categories
+      parameters:
+        - name: language
+          in: query
+          required: true
+          description: ISO 639-1 language code
+          schema:
+            type: string
+            enum:
+              - en
+              - fr
+              - ít
+              - es
+              - de
+              - zh
+              - ar
+              - hi
+              - pt
+            default: en
+      responses:
+        "200":
+          description: Live found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Category"
+        "400":
+          description: Invalid query supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+  /sessions:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Catalogue - Manager
+      summary: Lists all sessions created by me
+      description: Lists all sessions created by me
+      responses:
+        "200":
+          description: Sessions found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SessionReply"
+        "400":
+          description: Invalid query supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Catalogue - Manager
+      summary: Create a session
+      description: Create an session
+      requestBody:
+        $ref: "#/components/requestBodies/SessionBody"
+      responses:
+        "201":
+          description: Feedback created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SessionReply"
+        "400":
+          description: Invalid uuid supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+        "404":
+          description: Session Uuid not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+  "/sessions/{session_uuid}":
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Catalogue - Manager
+      summary: Get information about the requested session
+      description: Get information about the requested session
+      parameters:
+        - name: session_uuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Session found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Session"
+        "400":
+          description: Invalid UUID supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Catalogue - Manager
+      summary: Create a session
+      description: Create an session
+      parameters:
+        - name: session_uuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        $ref: "#/components/requestBodies/SessionBody"
+      responses:
+        "204":
+          description: Feedback created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SessionReply"
+        "400":
+          description: Invalid uuid supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+        "404":
+          description: Session Uuid not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - Catalogue - Manager
+      summary: Delete a session and all the relative lives / images
+      description: A special handling has to be done on the users that buy the lives
+      parameters:
+        - name: session_uuid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: session deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+        "400":
+          description: Invalid UUID supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+  "/sessions/{session_uuid}/lives":
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Catalogue - Manager
+      summary: Get information about the requested session
+      description: Get information about the requested session
+      parameters:
+        - name: session_uuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: live_uuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Session found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Session"
+        "400":
+          description: Invalid UUID supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+  /lives:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Catalogue - Manager
+      summary: Fetch live details by uuid or all the one I created
+      description: Fetch live details by uuid or all the one I created
+      parameters:
+        - name: live_uuid
+          in: query
+          description: Optionally pass the live uuid to list all the relative details
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Live found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Live"
+        "400":
+          description: Invalid query supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Catalogue - Manager
+      summary: Create live
+      description: Create live, the presenter, if not specififed, will be the creator
+        of the relative session
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              allOf:
+                - properties:
+                    session_uuid:
+                      type: string
+                      format: uuid
+                - $ref: "#/components/schemas/LiveBody"
+        required: true
+      responses:
+        "201":
+          description: Lives created
+        "400":
+          description: Invalid query supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+  "/lives/{live_uuid}":
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Catalogue - Manager
+      summary: Fetch live details by uuid or all the one I created
+      description: Fetch live details by uuid or all the one I created
+      parameters:
+        - name: live_uuid
+          in: path
+          required: true
+          description: Optionally pass the live uuid to list all the relative details
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Live found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Live"
+        "400":
+          description: Invalid query supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Catalogue - Manager
+      summary: Modify live
+      description: Modify live, the presenter, if not specififed, will be the creator
+        of the relative session
+      parameters:
+        - name: live_uuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                live:
+                  $ref: "#/components/schemas/LiveBody"
+                session_uuid:
+                  type: string
+                  format: uuid
+        required: true
+      responses:
+        "201":
+          description: Lives updated
+        "400":
+          description: Invalid query supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - Catalogue - Manager
+      summary: Delete a session and all the relative lives / images
+      description: A special handling has to be done on the users that buy the lives
+      parameters:
+        - name: live_uuid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: live deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+        "400":
+          description: Invalid UUID supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+  /images:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Catalogue - Manager
+      summary: Store an image
+      description: Store an image
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                upfile:
+                  description: The file to upload.
+                  type: string
+                  format: binary
+                session_uuid:
+                  description: UUID of the session
+                  type: string
+                  format: uuid
+              required:
+                - upfile
+                - session_uuid
+        required: true
+      responses:
+        "201":
+          description: Image stored
+        "400":
+          description: Invalid uuid supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Catalogue - Manager
+      summary: Fetch images of a given session
+      description: Fetch images details of a given session
+      parameters:
+        - name: session_uuid
+          in: query
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Images found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Image"
+        "400":
+          description: Invalid query supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+  "/images/{image_uuid}":
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - Catalogue - Manager
+      summary: Delete an image
+      description: Delete an image
+      parameters:
+        - name: image_uuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "201":
+          description: Image deleted
+        "400":
+          description: Invalid UUID supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+  /availabilities:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Catalogue - Availability
+      summary: Setup initial availability for the given session
+      description: Setup initial availability for the given session
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AvailabilityBody"
+        required: true
+      responses:
+        "201":
+          description: Availability initied
+        "400":
+          description: Invalid query supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+  "/availabilities/{ref_uuid}":
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Catalogue - Availability
+      summary: Fetch availability for the given session
+      description: Fetch categories
+      parameters:
+        - name: ref_uuid
+          in: path
+          required: true
+          description: Reference uuid
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Availability found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Availability"
+        "400":
+          description: Invalid query supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+  "/availabilities/{ref_uuid}/decrease":
+    patch:
+      security:
+        - Bearer: []
+      tags:
+        - Catalogue - Availability
+      summary: Decreased availability for the given session (new booking done)
+      description: Decreased availability for the given session (new booking done)
+      parameters:
+        - name: ref_uuid
+          in: path
+          required: true
+          description: Reference uuid
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Availability decreased
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Availability"
+        "400":
+          description: Invalid query supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+  "/availabilities/{ref_uuid}/increase":
+    patch:
+      security:
+        - Bearer: []
+      tags:
+        - Catalogue - Availability
+      summary: Increase availability for the given session (booking cancelled)
+      description: Increase availability for the given session (booking cancelled)
+      parameters:
+        - name: ref_uuid
+          in: path
+          required: true
+          description: Reference uuid
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Availability increased
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Availability"
+        "400":
+          description: Invalid query supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+servers:
+  - url: https://localhost:5000/api/v1
+  - url: http://localhost:5000/api/v1
+components:
+  requestBodies:
+    SessionBody:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/SessionBody"
+      required: true
+  securitySchemes:
+    BearerAuth:
+      type: apiKey
+      name: Authorization
+      in: header
+  schemas:
+    Message:
+      type: string
+    LanguageCode:
+      type: string
+      description: ISO 639-1 language code
+      default: en
+    Localizable:
+      type: object
+      required:
+        - value
+        - code
+      properties:
+        value:
+          type: string
+        code:
+          $ref: "#/components/schemas/LanguageCode"
+    Currency:
+      type: string
+      description: ISO 4217 currency code
+      default: EUR
+    Money:
+      type: object
+      required:
+        - currency
+        - amount
+      properties:
+        amount:
+          type: integer
+        currency:
+          $ref: "#/components/schemas/Currency"
+    Category:
+      type: object
+      required:
+        - uuid
+        - value
+      properties:
+        uuid:
+          type: string
+          format: uuid
+          description: UUID of the category. It is the same for all the languages
+        value:
+          type: string
+          example: fitness, educational, entertaining, religious
+          description: category in the given language
+    Session:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/SessionBody"
+        - properties:
+            uuid:
+              type: string
+              format: uuid
+              description: UUID of the session
+            created_at:
+              type: string
+              format: date-time
+              description: GMT Creation date time of the session as defined by RFC 3339,
+                section 5.6
+    SessionBody:
+      type: object
+      required:
+        - name
+        - category
+        - creator_uuid
+        - tokens
+      properties:
+        name:
+          type: string
+          description: Name of the session
+        category:
+          $ref: "#/components/schemas/Category"
+        hashtags:
+          type: array
+          description: Array of hashtags
+          items:
+            type: string
+            example: "#bestof2021"
+        description:
+          type: string
+        language_iso:
+          $ref: "#/components/schemas/LanguageCode"
+        creator_uuid:
+          type: string
+          format: uuid
+          description: UUID of the creator (user) of the session
+        tokens:
+          type: integer
+          minimum: 0
+          description: Number of tokens needed to attend the session
+    SessionReply:
+      type: object
+      required:
+        - session_uuid
+      properties:
+        session_uuid:
+          type: string
+          format: uuid
+          description: UUID of the session
+    Image:
+      type: object
+      allOf:
+        - properties:
+            uuid:
+              type: string
+              format: uuid
+              description: UUID of the image, used for delete operation
+              example: ""
+            uri:
+              type: string
+              format: uri
+              description: Uri of the image generated by the server
+              example: session-uuid/image-uuid
+        - $ref: "#/components/schemas/ImageBody"
+    ImageBody:
+      type: object
+      required:
+        - session_uuid
+      properties:
+        session_uuid:
+          type: string
+          format: uuid
+          description: UUID of the session
+    Live:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/LiveBody"
+        - properties:
+            uuid:
+              type: string
+              format: uuid
+              description: UUID of the live
+            session_uuid:
+              type: string
+              format: uuid
+              description: UUID of the session
+    LiveBody:
+      type: object
+      required:
+        - from
+        - to
+        - presenter_uuid
+      properties:
+        from:
+          type: string
+          format: date-time
+          description: Start date time in GMT
+        to:
+          type: string
+          format: date-time
+          description: Start date time in GMT
+        presenter_uuid:
+          type: string
+          format: uuid
+          description: UUID of the presenter (user)
+        description:
+          type: string
+          description: Teh lenaguage of the description is the same of the session
+    Availability:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/AvailabilityBody"
+        - properties:
+            booked_slots:
+              type: integer
+              description: Number of booked slots
+              default: 0
+    AvailabilityBody:
+      type: object
+      required:
+        - ref_uuid
+      properties:
+        ref_uuid:
+          type: string
+          format: uuid
+        max_slots:
+          type: integer
+          minimum: 0
+          description: Maximum number of slots
+          default: 100

@@ -8,7 +8,7 @@ from src.exc.app_exception import ServerException, NotFoundException, ConflictEx
 # Update Session based on UUID
 ##
 
-def edit(sessionUUID, name, category, hashtags, description, creatorUUID):
+def edit(sessionUUID, name, tokens, category, hashtags, description, LanguageISO, creatorUUID):
     db_instance = Db()
     session = db_instance.session
     t_session = db_instance.model.Session
@@ -18,20 +18,21 @@ def edit(sessionUUID, name, category, hashtags, description, creatorUUID):
                                                    t_session.CreatorUUID == creatorUUID).update(
             {
                 'Name': name,
+                'Tokens': tokens,
                 'Category': category['uuid'],
                 'LastUpdateDatetime': datetime.datetime.now(),
-                'LanguageISO': description['code'],
-                'Description': description['value'],
+                'LanguageISO': LanguageISO,
+                'Description': description,
             })
 
         hashSessions = session.query(t_sessionTag).filter(t_sessionTag.SessionUUID == sessionUUID).update({
-            'Hashtag': ','.join(hashtags),
-            'LanguageISO': description['code']
+            'Hashtag': ','.join(hashtags) if len(hashtags) > 0 else '',
+            'LanguageISO': LanguageISO if LanguageISO != '' else 'en'
         })
 
         if sessions and hashSessions:
             session.commit()
-            return {'session_uuid': sessionUUID + ' successfully updated'}
+            return 'Session updated'
         else:
             raise ConflictException('There are conflicts with the requested Id ' + sessionUUID)
     except ConflictException as ex:

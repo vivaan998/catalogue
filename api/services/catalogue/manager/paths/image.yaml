@@ -14,7 +14,7 @@ post:
       name: upfile
       type: file
       required: true
-      description: The file to upload.
+      description: "The file to upload."
     - in: formData
       name: session_uuid
       required: true
@@ -46,17 +46,17 @@ get:
     - application/json
   responses:
     '200':
-      description: Images found 
+      description: "Images found" 
       schema:
         type: array
         items:
           $ref: "#/definitions/Image"
     '400':
-      description: Invalid query supplied
+      description: "Invalid query supplied"
       schema: 
         $ref: '#/definitions/Message'
     '404':
-      description: Not found
+      description: "Not found"
       schema: 
         $ref: '#/definitions/Message'
 

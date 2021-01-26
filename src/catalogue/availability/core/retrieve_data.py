@@ -14,7 +14,7 @@ def read_availability(liveUUID):
     try:
         results = dict()
         availabilities = availability.query(t_availability).filter(t_availability.LiveUUID == liveUUID).one()
-        results['LiveUUID'] = availabilities.LiveUUID
+        results['ref_uuid'] = availabilities.LiveUUID
         results['max_slots'] = availabilities.MaxSlots
         results['booked_slots'] = availabilities.BookedSlots
         return results

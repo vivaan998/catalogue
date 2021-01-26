@@ -1,0 +1,34 @@
+get:
+  security:
+    - Bearer: []
+  tags:
+    - Catalogue - Manager
+  summary: 'Get information about the requested session'
+  description: 'Get information about the requested session'  
+  parameters:
+    - name: session_uuid
+      in: path
+      required: true
+      type: string
+      format: uuid
+    - name: live_uuid
+      in: path
+      required: true
+      type: string
+      format: uuid
+  produces:
+    - application/json
+  responses:
+    '200':
+      description: Session found 
+      schema:
+        $ref: "#/definitions/Session"
+    '400':
+      description: Invalid UUID supplied
+      schema: 
+        $ref: '#/definitions/Message'
+    '404':
+      description: Not found
+      schema: 
+        $ref: '#/definitions/Message'
+

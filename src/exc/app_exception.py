@@ -4,6 +4,10 @@ class AppException(Exception):
         self.error = error
         self.http_code = http_code
 
+class ClientException(AppException):
+    def __init__(self, error=None):
+        super().__init__(error,  400)
+
 
 class MissingFieldException(AppException):
     def __init__(self, error=None):
@@ -33,3 +37,6 @@ class ServerException(AppException):
 class IntegrityException(AppException):
     def __init__(self, error=None):
         super().__init__(error, 400)
+
+
+

@@ -8,6 +8,14 @@ Base = declarative_base()
 metadata = Base.metadata
 
 
+class Categories(Base):
+    __tablename__ = 'Categories'
+
+    UUID = Column(String(256), primary_key=True, nullable=False)
+    LanguageISO = Column(String(36), primary_key=True, nullable=False)
+    Value = Column(Text)
+
+
 class Image(Base):
     __tablename__ = 'Image'
 
@@ -22,12 +30,13 @@ class Session(Base):
 
     UUID = Column(String(256), primary_key=True)
     Name = Column(String(256))
+    Tokens = Column(BIGINT(20), nullable=False)
     Category = Column(ForeignKey('Categories.UUID', ondelete='CASCADE'), index=True, nullable=False)
     CreatorUUID = Column(String(256), nullable=False)
     CreationDateTime = Column(DateTime, server_default=text("CURRENT_TIMESTAMP"))
     LastUpdateDatetime = Column(DateTime)
     Description = Column(Text)
-    LanguageISO = Column(String(36))
+    LanguageISO = Column(String(36), server_default='en')
 
     Categories = relationship('Categories')
 
@@ -43,7 +52,7 @@ class Live(Base):
     LastUpdateDatetime = Column(DateTime)
     CreationDateTime = Column(DateTime, server_default=text("CURRENT_TIMESTAMP"))
     Description = Column(Text)
-    LanguageISO = Column(String(36))
+    LanguageISO = Column(String(36), server_default='en')
 
     Session = relationship('Session')
 
@@ -62,8 +71,7 @@ class SessionTag(Base):
 
     SessionUUID = Column(ForeignKey('Session.UUID', ondelete='CASCADE'), primary_key=True, nullable=False)
     Hashtag = Column(Text, primary_key=True, nullable=False)
-    LanguageISO = Column(String(2))
-
+    LanguageISO = Column(String(36), server_default='en')
     Session = relationship('Session')
 
 
@@ -72,14 +80,6 @@ class LiveTag(Base):
 
     LiveUUID = Column(ForeignKey('Live.UUID', ondelete='CASCADE'), primary_key=True, nullable=False)
     Hashtag = Column(Text, primary_key=True, nullable=False)
-    LanguageISO = Column(String(2))
+    LanguageISO = Column(String(36), server_default='en')
 
     Live = relationship('Live')
-
-
-class Categories(Base):
-    __tablename__ = 'Categories'
-
-    UUID = Column(String(256), primary_key=True, nullable=False)
-    LanguageISO = Column(String(36), primary_key=True, nullable=False)
-    Value = Column(Text)

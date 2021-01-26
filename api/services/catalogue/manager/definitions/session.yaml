@@ -1,6 +1,6 @@
 type: object
-required:
-  - uuid
+#required:
+#  - uuid
 allOf:
   - $ref: '#/definitions/SessionBody'
   - properties:
@@ -10,7 +10,5 @@ allOf:
         description: 'UUID of the session'
       created_at:
         type: string
-        format: datetime
+        format: date-time
         description: 'GMT Creation date time of the session as defined by RFC 3339, section 5.6'
-        example: '2020-07-21T17:32:28Z'
-

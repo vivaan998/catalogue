@@ -7,18 +7,13 @@ from src.exc.app_exception import NotFoundException, ServerException
 # ALL Categories based on language
 ##
 
-def read_categories(category_languageISO, search):
+def read_categories(category_languageISO):
     db_instance = Db()
     session = db_instance.session
     t_categories = db_instance.model.Categories
 
     try:
-        if search is None:
-            result = session.query(t_categories).filter(t_categories.LanguageISO == category_languageISO).all()
-        else:
-            result = session.query(t_categories).filter(t_categories.Value.contains(search),
-                                                        t_categories.LanguageISO == category_languageISO).all()
-
+        result = session.query(t_categories).filter(t_categories.LanguageISO == category_languageISO).all()
         return result
 
     except exc.NoResultFound as ex:

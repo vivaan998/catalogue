@@ -1,4 +1,5 @@
 from sqlalchemy.orm import exc
+from sqlalchemy import or_
 from src.dal.db import Db
 from src.exc.app_exception import NotFoundException, ServerException
 
@@ -23,15 +24,13 @@ def read_session(sessionUUID):
             'value': category.Value,
             'UUID': category.UUID
         }
-        results['hashtags'] = hashtags.Hashtag.split(',')
-        results['description'] = {
-            'value': sessions.Description,
-            'code': sessions.LanguageISO
-        }
-        results['created_uuid'] = sessions.CreatorUUID
-        results['tokens'] = 0
+        results['hashtags'] = hashtags.Hashtag.split(',') if len(hashtags.Hashtag) > 0 else ''
+        results['description'] = sessions.Description
+        results['language_iso'] = sessions.LanguageISO
+        results['creator_uuid'] = sessions.CreatorUUID
+        results['tokens'] = sessions.Tokens
         results['uuid'] = sessions.UUID
-        results['created_at'] = sessions.CreationDateTime
+        results['created_at'] = sessions.CreationDateTime.strftime("%Y-%m-%dT%H:%M:%SZ")
         return results
 
     except exc.NoResultFound as ex:
@@ -50,40 +49,28 @@ def read_sessions(search):
     t_category = db_instance.model.Categories
     try:
         results = []
-        sessions = session.query(t_session).all()
+        if search is None:
+            sessions = session.query(t_session).all()
+        else:
+            sessions = session.query(t_session).filter(or_(t_session.Name.contains(search),
+                                                           t_session.Description.contains(search)))
         if sessions:
             for each_session in sessions:
                 hashtags = session.query(t_session_tag).filter(t_session_tag.SessionUUID == each_session.UUID).one()
                 category = session.query(t_category).filter(t_category.UUID == each_session.Category).one()
-                if search is None:
-                    result = {
-                        'name': each_session.Name,
-                        'category': {"value": category.Value, "UUID": category.UUID},
-                        'hashtags': hashtags.Hashtag.split(','),
-                        'description': {"value": each_session.Description, "code": each_session.LanguageISO},
-                        'creator_uuid': each_session.CreatorUUID,
-                        'tokens': 0,
-                        'session_uuid': each_session.UUID,
-                        'created_at': each_session.CreationDateTime
-                    }
-                    results.append(result)
-                else:
-                    if search in each_session.Name or search in category.Value or search in hashtags or search in \
-                            each_session.Description:
-
-                        result = {
-                            'name': each_session.Name,
-                            'category': {"value": category.Value, "UUID": category.UUID},
-                            'hashtags': hashtags.Hashtag.split(','),
-                            'description': {"value": each_session.Description, "code": each_session.LanguageISO},
-                            'creator_uuid': each_session.CreatorUUID,
-                            'tokens': 0,
-                            'session_uuid': each_session.UUID,
-                            'created_at': each_session.CreationDateTime
-                        }
-                        results.append(result)
+                result = {
+                    'name': each_session.Name,
+                    'category': {"value": category.Value, "UUID": category.UUID},
+                    'hashtags': hashtags.Hashtag.split(',') if len(hashtags.Hashtag) > 0 else '',
+                    'description': each_session.Description,
+                    'language_is': each_session.LanguageISO,
+                    'creator_uuid': each_session.CreatorUUID,
+                    'tokens': each_session.Tokens,
+                    'session_uuid': each_session.UUID,
+                    'created_at': each_session.CreationDateTime.strftime("%Y-%m-%dT%H:%M:%SZ")
+                }
+                results.append(result)
         return results
-
     except Exception as ex:
         print(str(ex))
         raise ServerException(str(ex))

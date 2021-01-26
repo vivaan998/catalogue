@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "8c199e51-2d8f-4e2c-bc40-67cc11443955",
+		"_postman_id": "b7badcf8-7db6-44e7-83e1-60446e1883d4",
 		"name": "Catalogue Categories",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -27,34 +27,6 @@
 						{
 							"key": "language",
 							"value": "en"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get Category based on language",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:5000/api/v1/categories/?language=fr",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5000",
-					"path": [
-						"api",
-						"v1",
-						"categories",
-						""
-					],
-					"query": [
-						{
-							"key": "language",
-							"value": "fr"
 						}
 					]
 				}

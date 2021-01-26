@@ -1,9 +1,6 @@
 type: object
-required:
-  - presenter_uuid
-  - session_uuid
-  - from
-  - to
+#required:
+#  - session_uuid
 allOf:
   - $ref: '#/definitions/LiveBody'
   - properties:
@@ -15,7 +12,3 @@ allOf:
         type: string
         format: uuid
         description: 'UUID of the session'
-      streaming_uuid:
-        type: string
-        format: uuid
-        description: 'UUID of the streaming'

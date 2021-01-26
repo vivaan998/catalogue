@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "8c8994c4-afe8-44e1-8c90-b520164f3d14",
+		"_postman_id": "fcfe26d2-e004-4c10-be2e-02acd4598ed5",
 		"name": "Catalogue Sessions",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -11,7 +11,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5000/api/v1/sessions/?session_uuid=8d9da9ec-154b-4f8a-af6d-751551434dfc",
+					"raw": "http://localhost:5000/api/v1/sessions/ab0e318c-ed46-41bb-8cdb-3387e8aac2ff",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -21,13 +21,7 @@
 						"api",
 						"v1",
 						"sessions",
-						""
-					],
-					"query": [
-						{
-							"key": "session_uuid",
-							"value": "8d9da9ec-154b-4f8a-af6d-751551434dfc"
-						}
+						"ab0e318c-ed46-41bb-8cdb-3387e8aac2ff"
 					]
 				}
 			},
@@ -40,7 +34,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"name\": \"First Session\",\n  \"category\": {\n    \"value\": \"fitness\",\n    \"uuid\": \"f0c9011b-ff53-4cad-a747-2233fb343661\"\n  },\n  \"hashtags\": [\n    \"#bestof2021\", \"#fitIndia\"\n  ],\n  \"description\": {\n    \"value\": \"Get Fit in 2021\",\n    \"code\": \"en\"\n  },\n  \"creator_uuid\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n  \"tokens\": 0\n}",
+					"raw": "{\n  \"name\": \"Second Session\",\n  \"category\": {\n    \"value\": \"body\",\n    \"uuid\": \"9cdd3e49-0907-4736-8321-c283a3041354\"\n  },\n  \"hashtags\": [\n    \"#bodyexercises\", \"#fitIndia\"\n  ],\n  \"description\": \"Shape your body\", \n  \"language_iso\": \"en\",\n  \"creator_uuid\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n  \"tokens\": 10\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -71,13 +65,64 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"sessionUUID\": \"8bff1e86-890d-49f7-9b72-b41c75ef440a\",\n    \"name\": \"First Session\",\n    \"category\": {\n        \"value\": \"fitness\",\n        \"uuid\": \"f0c9011b-ff53-4cad-a747-2233fb343661\"\n    },\n    \"hashtags\": [\n        \"#bestof2021\", \"#fitIndia\", \"#unittest\"\n    ],\n    \"description\": {\n        \"value\": \"Unit test module for put\",\n        \"code\": \"en\"\n    },\n    \"creator_uuid\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n    \"tokens\": 0\n}",
+					"raw": "{\n    \"name\": \"Third Session\",\n    \"category\": {\n        \"value\": \"body\",\n        \"uuid\": \"9cdd3e49-0907-4736-8321-c283a3041354\"\n    },\n    \"hashtags\": [\"#hello\"],\n    \"description\": \"tested\",\n    \"language_iso\": \"en\",\n    \"creator_uuid\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n    \"tokens\": 19\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
+				"url": {
+					"raw": "http://localhost:5000/api/v1/sessions/ab0e318c-ed46-41bb-8cdb-3387e8aac2ff",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"sessions",
+						"ab0e318c-ed46-41bb-8cdb-3387e8aac2ff"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Session",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/sessions/6799f908-3f21-4a95-a90e-af5c09ab24f1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"sessions",
+						"6799f908-3f21-4a95-a90e-af5c09ab24f1"
+					],
+					"query": [
+						{
+							"key": "session_uuid",
+							"value": "8d9da9ec-154b-4f8a-af6d-751551434dfc",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all sessions",
+			"request": {
+				"method": "GET",
+				"header": [],
 				"url": {
 					"raw": "http://localhost:5000/api/v1/sessions/",
 					"protocol": "http",
@@ -90,34 +135,6 @@
 						"v1",
 						"sessions",
 						""
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete Session",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:5000/api/v1/sessions/?session_uuid=8d9da9ec-154b-4f8a-af6d-751551434dfc",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5000",
-					"path": [
-						"api",
-						"v1",
-						"sessions",
-						""
-					],
-					"query": [
-						{
-							"key": "session_uuid",
-							"value": "8d9da9ec-154b-4f8a-af6d-751551434dfc"
-						}
 					]
 				}
 			},

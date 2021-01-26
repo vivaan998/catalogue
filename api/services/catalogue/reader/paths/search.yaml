@@ -8,17 +8,12 @@ get:
       in: query
       required: true
       type: string  
-      description: A comma-separated list of generic search criteria.
+      description: A comma-separated list of generic search criteria in the live attributes
     - name: category
       in: query
       required: true
       type: string  
-      description: Category  
-    - name: presenter
-      in: query
-      required: true
-      type: string  
-      description: Presenter
+      description: Category 
   produces:
     - application/json
   responses:

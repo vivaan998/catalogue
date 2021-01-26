@@ -3,29 +3,29 @@ get:
     - Bearer: []
   tags:
     - Catalogue - Manager
-  summary: 'Fetch live details for a given session'
-  description: 'Fetch live details for a given session'
+  summary: 'Fetch live details by uuid or all the one I created'
+  description: 'Fetch live details by uuid or all the one I created'
   parameters:
-    - name: session_uuid
+    - name: live_uuid
       in: query
       type: string
       format: uuid
-      required: True
+      description: Optionally pass the live uuid to list all the relative details
   produces:
     - application/json
   responses:
     '200':
-      description: Live found 
+      description: "Live found" 
       schema:
         type: array
         items:
           $ref: "#/definitions/Live"
     '400':
-      description: Invalid query supplied
+      description: "Invalid query supplied"
       schema: 
         $ref: '#/definitions/Message'
     '404':
-      description: Not found
+      description: "Not found"
       schema: 
         $ref: '#/definitions/Message'
 
@@ -42,25 +42,23 @@ post:
       in: body
       schema:
         type: object
-        properties:
-          lives:
-            type: array
-            items:
-              $ref: '#/definitions/LiveBody'
-          session_uuid:
-            type: string
-            format: uuid
+        allOf:
+          - properties:
+              session_uuid:
+                type: string
+                format: uuid
+          - $ref: '#/definitions/LiveBody'
       required: True
   produces:
     - application/json
   responses:
     '201':
-      description: Lives created 
+      description: "Lives created"
     '400':
-      description: Invalid query supplied
+      description: "Invalid query supplied"
       schema: 
         $ref: '#/definitions/Message'
     '404':
-      description: Not found
+      description: "Not found"
       schema: 
         $ref: '#/definitions/Message'

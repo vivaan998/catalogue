@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "da62f48f-70b6-4926-9ec8-ee26258d2098",
+		"_postman_id": "8f4e5d73-7619-4180-aea3-f7bff5b15432",
 		"name": "Catalogue Live",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -11,7 +11,36 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5000/api/v1/lives/?live_uuid=0db27595-375e-4b9d-b3a3-790da3010888",
+					"raw": "http://localhost:5000/api/v1/lives/b1c67fe4-e3fb-4ab4-baca-c925c6819d8e",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"lives",
+						"b1c67fe4-e3fb-4ab4-baca-c925c6819d8e"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all lives",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/lives/?search=liv",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -25,31 +54,9 @@
 					],
 					"query": [
 						{
-							"key": "live_uuid",
-							"value": "0db27595-375e-4b9d-b3a3-790da3010888"
+							"key": "search",
+							"value": "liv"
 						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get all lives",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:5000/api/v1/lives/",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5000",
-					"path": [
-						"api",
-						"v1",
-						"lives",
-						""
 					]
 				}
 			},
@@ -62,7 +69,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"live\": {\n        \"from\": \"2021-01-17 18:25:14.83\",\n        \"to\": \"2021-01-17 19:25:14.83\",\n        \"presenter_uuid\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n        \"description\": \"Live Create\",\n        \"hashtags\": [\"abc\", \"dsasd\"],\n        \"language\": \"en\"\n    },\n    \"session_uuid\": \"8d9da9ec-154b-4f8a-af6d-751551434dfc\"\n}",
+					"raw": "{\n    \n    \"from\": \"2021-01-26T11:03:21.888Z\",\n    \"to\": \"2021-01-26T11:04:21.888Z\",\n    \"presenter_uuid\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n    \"description\": \"Third Live Create\",\n    \"session_uuid\": \"ff653833-8f45-42d1-87f7-9d5a9e5c2db8\", \n    \"hashtags\": [\"#test\"]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -93,7 +100,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"liveUUID\": \"80f9f1e8-77a8-40ae-bfe8-e3c1ee0fade8\",\n    \"live\": {\n            \"from\": \"2021-02-17 18:25:14.832\",\n            \"to\": \"2021-02-17 20:25:14.832\",\n            \"presenter_uuid\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n            \"description\": \"Live Update\",\n        \"hashtags\": [\"city\", \"state\"],\n            \"language\": \"en\"\n        },\n    \"session_uuid\": \"8d9da9ec-154b-4f8a-af6d-751551434dfc\"\n}",
+					"raw": "{\n    \"hashtags\": [],   \n    \"from\": \"2021-01-26T11:03:21.888Z\",\n    \"to\": \"2021-01-26T11:05:21.888Z\",\n    \"presenter_uuid\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n    \"description\": \"Live Update\",\n    \"session_uuid\": \"ab0e318c-ed46-41bb-8cdb-3387e8aac2ff\" \n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -101,7 +108,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5000/api/v1/lives/",
+					"raw": "http://localhost:5000/api/v1/lives/d73d5c65-9a99-4825-9f65-91cb8c722133",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -111,7 +118,7 @@
 						"api",
 						"v1",
 						"lives",
-						""
+						"d73d5c65-9a99-4825-9f65-91cb8c722133"
 					]
 				}
 			},
@@ -123,7 +130,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5000/api/v1/lives/?live_uuid=0db27595-375e-4b9d-b3a3-790da3010888",
+					"raw": "http://localhost:5000/api/v1/lives/d73d5c65-9a99-4825-9f65-91cb8c722133",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -133,12 +140,13 @@
 						"api",
 						"v1",
 						"lives",
-						""
+						"d73d5c65-9a99-4825-9f65-91cb8c722133"
 					],
 					"query": [
 						{
-							"key": "live_uuid",
-							"value": "0db27595-375e-4b9d-b3a3-790da3010888"
+							"key": "",
+							"value": "",
+							"disabled": true
 						}
 					]
 				}

@@ -13,7 +13,6 @@ class TestCreateSuccess(unittest.TestCase):
 
     def test_get(self):
         rv = self.app.get('/api/v1/categories/?language=en')
-        print(rv)
         self.assertEqual(rv.status_code, 200)
 
 

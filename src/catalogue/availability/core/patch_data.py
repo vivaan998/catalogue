@@ -17,19 +17,17 @@ def increaseBookSlot(liveUUID):
 
     try:
         getData = read_availability(liveUUID)
-        if getData['booked_slots'] != 0:
-            if getData['max_slots'] - getData['booked_slots'] <= getData['max_slots']:
-                lives = availability.query(t_availability).filter(t_availability.LiveUUID == liveUUID).update({
-                    'BookedSlots': getData['booked_slots'] - 1,
-                    'LastUpdateDatetime': datetime.datetime.now(),
-                })
-                if lives:
-                    availability.commit()
-                    return True
-                else:
-                    raise ConflictException('There are conflicts with the requested Id ' + liveUUID + " in slot booking")
+        if getData['max_slots'] < 100:
+            lives = availability.query(t_availability).filter(t_availability.LiveUUID == liveUUID).update({
+                'MaxSlots': getData['max_slots'] + 1,
+                'BookedSlots': getData['booked_slots'] - 1,
+                'LastUpdateDatetime': datetime.datetime.now(),
+            })
+            if lives:
+                availability.commit()
+                return True
             else:
-                return False
+                raise ConflictException('There are conflicts with the requested Id ' + liveUUID + " in slot booking")
         else:
             return False
     except ConflictException as ex:
@@ -52,8 +50,9 @@ def decreaseBookSlot(liveUUID):
     t_availability = db_instance.model.Availability
     try:
         getData = read_availability(liveUUID)
-        if getData['max_slots'] >= getData['booked_slots']:
+        if getData['max_slots'] > 0:
             lives = availability.query(t_availability).filter(t_availability.LiveUUID == liveUUID).update({
+                'MaxSlots': getData['max_slots'] - 1,
                 'BookedSlots': getData['booked_slots'] + 1,
                 'LastUpdateDatetime': datetime.datetime.now(),
             })

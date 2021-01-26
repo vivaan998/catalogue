@@ -7,7 +7,7 @@ required:
 properties:
   name:
     type: string    
-    description: Name of the session
+    description: 'Name of the session'
   category:
     $ref: '#/definitions/Category'
   hashtags:
@@ -17,7 +17,9 @@ properties:
       type: string
       example: '#bestof2021'
   description:
-    $ref: '#/definitions/Localizable'
+      type: string
+  language_iso:
+    $ref: '#/definitions/LanguageCode'
   creator_uuid:
     type: string
     format: uuid

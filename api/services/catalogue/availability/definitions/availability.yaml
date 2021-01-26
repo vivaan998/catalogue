@@ -1,6 +1,4 @@
 type: object
-required:
-  - ref_uuid
 allOf:
   - $ref: '#/definitions/AvailabilityBody'
   - properties:
