@@ -18,12 +18,9 @@ class Categories(Base):
 
 class Image(Base):
     __tablename__ = 'Image'
-
     RefUUID = Column(String(256), primary_key=True, nullable=False)
-    Uri = Column(String(36), primary_key=True, nullable=False)
-    Title = Column(String(256))
-    Description = Column(Text)
-
+    SessionUUID = Column(ForeignKey('Session.UUID', ondelete='CASCADE'), nullable=False)
+    Uri = Column(String(256), primary_key=True, nullable=False)
 
 class Session(Base):
     __tablename__ = 'Session'
