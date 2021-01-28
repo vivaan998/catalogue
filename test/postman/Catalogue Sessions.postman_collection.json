@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "fcfe26d2-e004-4c10-be2e-02acd4598ed5",
+		"_postman_id": "5286396d-bf61-4b90-b83d-f648f746e607",
 		"name": "Catalogue Sessions",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -135,6 +135,29 @@
 						"v1",
 						"sessions",
 						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Lives based on Session UUID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/sessions/ab0e318c-ed46-41bb-8cdb-3387e8aac2ff/lives",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"sessions",
+						"ab0e318c-ed46-41bb-8cdb-3387e8aac2ff",
+						"lives"
 					]
 				}
 			},
