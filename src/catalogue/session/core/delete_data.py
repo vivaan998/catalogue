@@ -13,11 +13,14 @@ def delete(sessionUUID):
     t_session = db_instance.model.Session
     try:
         sessions = session.query(t_session).filter(t_session.UUID == sessionUUID).delete()
-        session.commit()
         if sessions:
+            session.commit()
             return 'Successfully deleted'
         else:
             raise NotFoundException('Session UUID ' + sessionUUID + " not found")
+    except NotFoundException as ex:
+        print(str(ex))
+        raise NotFoundException('Session UUID ' + sessionUUID + " not found")
     except Exception as ex:
         print(str(ex))
         raise ServerException(str(ex))

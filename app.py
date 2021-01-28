@@ -46,16 +46,16 @@ app.register_blueprint(bp_availability, url_prefix='/api/v1/availabilities')
 app.register_blueprint(bp_image, url_prefix='/api/v1/images')
 
 
-# @app.errorhandler(AppException)
-# def app_error(err):
-#     app.logger.exception(err)
-#     return make_response(jsonify(err.error), err.http_code)
+@app.errorhandler(AppException)
+def app_error(err):
+    app.logger.exception(err)
+    return make_response(jsonify(err.error), err.http_code)
 
 
-# @app.errorhandler(Exception)
-# def handle_generic_error(err):
-#     app.logger.exception(err)
-#     return make_response(jsonify(str(err)), 500)
+@app.errorhandler(Exception)
+def handle_generic_error(err):
+    app.logger.exception(err)
+    return make_response(jsonify(str(err)), 500)
 
 
 # @app.before_request

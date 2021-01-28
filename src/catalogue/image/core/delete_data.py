@@ -3,6 +3,8 @@ from src.dal.db import Db
 from src.exc.app_exception import NotFoundException, ServerException
 from config import basedir
 import os
+
+
 ##
 # Delete Image based on UUID
 ##
@@ -14,15 +16,17 @@ def delete(image_uuid):
     try:
         query = session.query(t_image).filter(t_image.RefUUID == image_uuid).one()
         if query:
-            os.remove(query.Uri) # Removing from local directory
-            sessions = session.query(t_image).filter(t_image.RefUUID == image_uuid).delete() # Removing from database
-            session.commit()
-            return 'Successfully deleted'
+            os.remove(query.Uri)  # Removing from local directory
+            sessions = session.query(t_image).filter(t_image.RefUUID == image_uuid).delete()  # Removing from database
+            if sessions:
+                session.commit()
+                return 'Successfully deleted'
         else:
             raise NotFoundException('Image UUID ' + image_uuid + ' not found')
-       
-          
+
+    except NotFoundException as ex:
+        print(str(ex))
+        raise NotFoundException('Image UUID' + image_uuid + " not found")
     except Exception as ex:
         print(str(ex))
         raise ServerException(str(ex))
-

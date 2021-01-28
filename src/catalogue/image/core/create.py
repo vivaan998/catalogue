@@ -9,40 +9,33 @@ import uuid
 import os
 from config import basedir
 from src.exc.app_exception import ServerException
-from werkzeug.utils import secure_filename
 
 
-
-def _populate_image_model(table_type, image_file, session_uuid):
+def _populate_image_model(table_type, session_uuid):
     
     new_uuid = str(uuid.uuid4())
     table = table_type(RefUUID=new_uuid)
     table.SessionUUID = session_uuid
-    table.Uri = 'static/'+ session_uuid + '/' + new_uuid + '.jpg'
+    table.Uri = 'static/' + session_uuid + '/' + new_uuid + '.jpg'
     return table
 
 
-
 def write(image_file, session_uuid):
-    
-    print(image_file)
-    print('session uuid >>>', session_uuid)
-
     db_instance = Db()
 
     image_table = db_instance.model.Image
-    sql_image_table = _populate_image_model(image_table, image_file, session_uuid)
+    sql_image_table = _populate_image_model(image_table, session_uuid)
     session = db_instance.session
     try:
         session.add(sql_image_table)
         session.commit()
-        url = os.path.join(basedir,'static\\' + session_uuid)
+        url = os.path.join(basedir, 'static/' + session_uuid)
 
         if not os.path.exists(url):
-            os.makedirs(os.path.join(basedir,'static\\' + session_uuid))
-            image_file.save(url + '\\' + sql_image_table.RefUUID + '.jpg')
+            os.makedirs(os.path.join(basedir, 'static/' + session_uuid))
+            image_file.save(url + '/' + sql_image_table.RefUUID + '.jpg')
         else:
-            image_file.save(url + '\\' + sql_image_table.RefUUID + '.jpg')
+            image_file.save(url + '/' + sql_image_table.RefUUID + '.jpg')
             
         return {'image_uuid': sql_image_table.RefUUID}
 

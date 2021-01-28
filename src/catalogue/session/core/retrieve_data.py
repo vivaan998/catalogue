@@ -1,8 +1,7 @@
-from sqlalchemy.orm import exc, Load
-from sqlalchemy import or_
+from sqlalchemy.orm import exc
+from sqlalchemy import or_, and_
 from src.dal.db import Db
 from src.exc.app_exception import NotFoundException, ServerException
-from sqlalchemy.orm import joinedload
 
 
 ##
@@ -74,6 +73,46 @@ def read_sessions(search):
                 }
                 results.append(result)
         return results
+    except Exception as ex:
+        print(str(ex))
+        raise ServerException(str(ex))
+
+
+def read_lives(session_uuid, search):
+    db_instance = Db()
+    session = db_instance.session
+    t_live = db_instance.model.Live
+    t_live_tag = db_instance.model.LiveTag
+    t_session = db_instance.model.Session
+    try:
+        results = []
+        query = session.query(t_live).join(t_live_tag)
+        if search is None:
+            lives = query.filter(t_live.SessionUUID == session_uuid)
+        else:
+            lives = query.filter(t_live.SessionUUID == session_uuid, or_(t_live.Description.contains(search),
+                                                                         t_live_tag.Hashtag.contains(search),
+                                                                         and_(or_(t_session.Name.contains(search),
+                                                                                  t_session.Description.contains(
+                                                                                      search)),
+                                                                              t_session.UUID == t_live.SessionUUID)))
+
+        if lives:
+            for live in lives:
+                hashtags = live.LiveTag
+                result = {
+                    'from': live.StartAtGMT.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
+                    'to': live.EndsAtGMT.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
+                    'hashtags': hashtags[0].Hashtag.split(',') if hashtags[0].Hashtag != '' else [],
+                    'description': live.Description,
+                    'presenter_uuid': live.PresenterUUID,
+                    'uuid': live.UUID,
+                    'language': live.LanguageISO,
+                    'session_uuid': live.SessionUUID,
+                }
+                results.append(result)
+        return results
+
     except Exception as ex:
         print(str(ex))
         raise ServerException(str(ex))

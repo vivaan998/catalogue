@@ -41,8 +41,12 @@ def get(session_uuid):
 
 @bp_session.route('/<session_uuid>/lives', methods=['GET'])
 def get_lives(session_uuid):
-    lives = session.get_lives(session_uuid)
-    return make_response("To be implemented", 200)
+    url = request.url
+    start = request.args.get('start', 1)
+    limit = request.args.get('limit', 1)
+    search = request.args.get('search', None)
+    lives = session.get_lives(session_uuid, search)
+    return make_response(jsonify(get_paginated_list(lives, url, start, limit)), 200)
 
 
 @bp_session.route('/<session_uuid>', methods=['DELETE'])

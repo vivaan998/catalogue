@@ -19,7 +19,6 @@ def edit(liveUUID, dt_from, dt_to, presenter_uuid, description, session_uuid, ha
     except exc.NoResultFound as ex:
         print(ex)
         raise NotFoundException('No such session found with UUID: ' + session_uuid)
-    print(language)
     try:
         lives = session.query(t_live).filter(t_live.UUID == liveUUID).update({
                 'StartAtGMT': dt_from,

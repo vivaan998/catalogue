@@ -61,5 +61,6 @@ def get_sessions(search):
     return sessions
 
 
-def get_lives(session_uuid):
-    pass
+def get_lives(session_uuid, search):
+    lives = retrieve_data.read_lives(session_uuid, search)
+    return lives

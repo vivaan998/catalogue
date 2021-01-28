@@ -22,6 +22,7 @@ class Image(Base):
     SessionUUID = Column(ForeignKey('Session.UUID', ondelete='CASCADE'), nullable=False)
     Uri = Column(String(256), primary_key=True, nullable=False)
 
+
 class Session(Base):
     __tablename__ = 'Session'
 

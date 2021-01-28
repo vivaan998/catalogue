@@ -49,4 +49,4 @@ def patch(ref_uuid, argument):
             return make_response(jsonify("All slots are booked"), 400)
 
     else:
-        raise MissingFieldException('argument for bookings')
+        raise MissingFieldException(' argument for bookings')
