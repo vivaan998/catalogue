@@ -6,23 +6,24 @@ from sqlalchemy.orm import joinedload
 
 
 ##
-# Fetch Session based on UUID
+# Fetch Image based on UUID
 ##
 
-def read_session(sessionUUID):
+def read_images(sessionUUID):
+
     db_instance = Db()
     session = db_instance.session
     t_image = db_instance.model.Image
     try:
-        temp = []
+        result = []
         query = session.query(t_image).filter(t_image.SessionUUID == sessionUUID).all()
-        for i in query:
-            temp.append({
-                "uuid": i.RefUUID,
-                "uri": i.Uri,
-                "session_uuid": i.SessionUUID
+        for image in query:
+            result.append({
+                "uuid": image.RefUUID,
+                "uri": image.Uri,
+                "session_uuid": image.SessionUUID
             })
-        return temp
+        return result
 
     except exc.NoResultFound as ex:
         print(str(ex))

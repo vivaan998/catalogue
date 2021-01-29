@@ -33,6 +33,9 @@ class ServerException(AppException):
     def __init__(self, error=None):
         super().__init__(error, 500)
 
+class FileNotFound(AppException):
+    def __init__(self, error=None):
+        super().__init__(error, 500)
 
 class IntegrityException(AppException):
     def __init__(self, error=None):

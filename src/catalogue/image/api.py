@@ -19,7 +19,6 @@ def before_request_func():
 
 @bp_image.route('/', methods=['POST'])
 def create():
-    print('>>>>>>>>>>>>>>>>>>>>>>>>>>>')
     images = image.add(request)
     return make_response(jsonify(images), 201)
 

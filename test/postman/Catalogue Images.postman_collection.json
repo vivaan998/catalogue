@@ -1,0 +1,99 @@
+{
+	"info": {
+		"_postman_id": "fcb13cc4-a522-470b-a671-84d8681f0eaa",
+		"name": "Catalogue Images",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Post",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "upfile",
+							"type": "file",
+							"src": "/C:/Users/I'm Harshil/Pictures/2017-04/DSC_0600.JPG"
+						},
+						{
+							"key": "session_uuid",
+							"value": "6591fcde-2490-422d-8725-9bdcc1a1de99",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/api/v1/images/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"images",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Images",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/api/v1/images/6591fcde-2490-422d-8725-9bdc",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"images",
+						"6591fcde-2490-422d-8725-9bdc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/api/v1/images/6b6ef2db-88ff-407f-b07f-b990b5698d8d",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"images",
+						"6b6ef2db-88ff-407f-b07f-b990b5698d8d"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

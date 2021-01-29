@@ -17,12 +17,16 @@ def is_valid_uuid(val):
 def add(request):
     image_file = request.files.get('upfile')
     session_uuid = request.form['session_uuid']
-    result = create.write(image_file, session_uuid)
-    return result
+    if is_valid_uuid(session_uuid):
+        result = create.write(image_file, session_uuid)
+        return result
+    else:
+        raise InvalidUUIDException('Invalid UUID supplied')
 
 def get(session_uuid):
+    print('#####', session_uuid)
     if is_valid_uuid(session_uuid):
-        images = retrieve_data.read_session(session_uuid)
+        images = retrieve_data.read_images(session_uuid)
         return images
     else:
         raise InvalidUUIDException('Invalid UUID supplied')
