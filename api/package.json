@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "multi-file-swagger": "^2.3.0",
+    "swagger2openapi": "^7.0.4"
+  }
+}

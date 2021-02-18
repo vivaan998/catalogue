@@ -1,0 +1,62 @@
+post:
+  security:
+    - Bearer: []
+  tags:
+    - Catalogue - Manager
+  summary: 'Store an image'
+  description: 'Store an image'
+  consumes:
+    - multipart/form-data
+  produces:
+    - application/json
+  parameters:
+    - in: formData
+      name: upfile
+      type: file
+      required: true
+      description: "The file to upload."
+    - in: formData
+      name: session_uuid
+      required: true
+      type: string
+      format: uuid
+      description: 'UUID of the session'
+  responses:
+    '201':
+      description: Image stored
+    '400':
+      description: Invalid uuid supplied
+      schema: 
+        $ref: '#/definitions/Message'
+
+get:
+  security:
+    - Bearer: []
+  tags:
+    - Catalogue - Manager
+  summary: 'Fetch images of a given session'
+  description: 'Fetch images details of a given session'
+  parameters:
+    - name: session_uuid
+      in: query
+      type: string
+      format: uuid
+      required: True
+  produces:
+    - application/json
+  responses:
+    '200':
+      description: "Images found" 
+      schema:
+        type: array
+        items:
+          $ref: "#/definitions/Image"
+    '400':
+      description: "Invalid query supplied"
+      schema: 
+        $ref: '#/definitions/Message'
+    '404':
+      description: "Not found"
+      schema: 
+        $ref: '#/definitions/Message'
+

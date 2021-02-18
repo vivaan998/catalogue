@@ -1,0 +1,97 @@
+get:
+  security:
+    - Bearer: []
+  tags:
+    - Catalogue - Manager
+  summary: 'Fetch live details by uuid or all the one I created'
+  description: 'Fetch live details by uuid or all the one I created'
+  parameters:
+    - name: live_uuid
+      in: path
+      type: string
+      format: uuid
+      required: true
+      description: Optionally pass the live uuid to list all the relative details
+  produces:
+    - application/json
+  responses:
+    '200':
+      description: "Live found" 
+      schema:
+        $ref: "#/definitions/Live"
+    '400':
+      description: "Invalid query supplied"
+      schema: 
+        $ref: '#/definitions/Message'
+    '404':
+      description: "Not found"
+      schema: 
+        $ref: '#/definitions/Message'
+
+put:
+  security:
+    - Bearer: []
+  tags:
+    - Catalogue - Manager  
+  summary: 'Modify live'
+  description: 'Modify live, the presenter, if not specififed, will be the creator of the relative session'
+  parameters:
+    - name: live_uuid
+      in: path
+      required: true
+      type: string
+      format: uuid
+    - name: data
+      in: body
+      schema:
+        type: object
+        properties:
+          live:
+            $ref: '#/definitions/LiveBody'
+          session_uuid:
+            type: string
+            format: uuid
+      required: True
+  produces:
+    - application/json
+  responses:
+    '201':
+      description: Lives updated 
+    '400':
+      description: Invalid query supplied
+      schema: 
+        $ref: '#/definitions/Message'
+    '404':
+      description: Not found
+      schema: 
+        $ref: '#/definitions/Message'
+
+
+
+delete:
+  security:
+    - Bearer: []
+  tags:
+    - Catalogue - Manager
+  summary: 'Delete a session and all the relative lives / images'
+  description: 'A special handling has to be done on the users that buy the lives' 
+  parameters:
+    - name: live_uuid
+      in: path
+      required: true
+      type: string
+  produces:
+    - application/json
+  responses:
+    '204':
+      description: live deleted 
+      schema: 
+        $ref: '#/definitions/Message'
+    '400':
+      description: Invalid UUID supplied
+      schema: 
+        $ref: '#/definitions/Message'
+    '404':
+      description: Not found
+      schema: 
+        $ref: '#/definitions/Message'

@@ -1,6 +1,6 @@
 # coding: utf-8
-from sqlalchemy import Column, DateTime, Float, ForeignKey, String, Text, text
-from sqlalchemy.dialects.mysql import BIGINT, INTEGER
+from sqlalchemy import Column, DateTime, ForeignKey, String, Text, text
+from sqlalchemy.dialects.mysql import BIGINT
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -8,42 +8,56 @@ Base = declarative_base()
 metadata = Base.metadata
 
 
+class Categories(Base):
+    __tablename__ = 'Categories'
+
+    UUID = Column(String(256), primary_key=True, nullable=False)
+    LanguageISO = Column(String(36), primary_key=True, nullable=False)
+    Value = Column(Text)
+
+
 class Image(Base):
     __tablename__ = 'Image'
-
-    RefUUID = Column(String(36), primary_key=True, nullable=False)
-    Uri = Column(String(36), primary_key=True, nullable=False)
-    Title = Column(String(256))
-    Description = Column(Text)
+    RefUUID = Column(String(256), primary_key=True, nullable=False)
+    SessionUUID = Column(ForeignKey('Session.UUID', ondelete='CASCADE'), nullable=False)
+    Uri = Column(String(256), primary_key=True, nullable=False)
 
 
 class Session(Base):
     __tablename__ = 'Session'
 
-    UUID = Column(String(36), primary_key=True)
+    UUID = Column(String(256), primary_key=True)
     Name = Column(String(256))
-    Category = Column(String(36))
-    CreatorUUID = Column(String(36))
+    Tokens = Column(BIGINT(20), nullable=False)
+    Category = Column(ForeignKey('Categories.UUID', ondelete='CASCADE'), index=True, nullable=False)
+    CreatorUUID = Column(String(256), nullable=False)
     CreationDateTime = Column(DateTime, server_default=text("CURRENT_TIMESTAMP"))
     LastUpdateDatetime = Column(DateTime)
+    Description = Column(Text)
+    LanguageISO = Column(String(36), server_default='en')
 
+    Categories = relationship('Categories', backref='Categories')
+    SessionTag = relationship('SessionTag', backref='SessionTag')
 
 
 class Live(Base):
     __tablename__ = 'Live'
 
-    UUID = Column(String(36), primary_key=True)
+    UUID = Column(String(256), primary_key=True)
     SessionUUID = Column(ForeignKey('Session.UUID'), index=True)
     PresenterUUID = Column(String(36))
     StartAtGMT = Column(DateTime, nullable=False)
     EndsAtGMT = Column(DateTime, nullable=False)
     LastUpdateDatetime = Column(DateTime)
     CreationDateTime = Column(DateTime, server_default=text("CURRENT_TIMESTAMP"))
+    Description = Column(Text)
+    LanguageISO = Column(String(36), server_default='en')
 
-    Session = relationship('Session')
+    Session = relationship('Session', backref='Session')
+    LiveTag = relationship('LiveTag', backref='LiveTag')
 
 
-class Availability(Live):
+class Availability(Base):
     __tablename__ = 'Availability'
 
     LiveUUID = Column(ForeignKey('Live.UUID', ondelete='CASCADE'), primary_key=True)
@@ -56,19 +70,8 @@ class SessionTag(Base):
     __tablename__ = 'SessionTag'
 
     SessionUUID = Column(ForeignKey('Session.UUID', ondelete='CASCADE'), primary_key=True, nullable=False)
-    Hashtag = Column(String(256), primary_key=True, nullable=False)
-    LanguageISO = Column(String(2))
-
-    Session = relationship('Session')
-
-
-class SessionTranslation(Base):
-    __tablename__ = 'SessionTranslation'
-
-    SessionUUID = Column(ForeignKey('Session.UUID', ondelete='CASCADE'), primary_key=True, nullable=False)
-    LanguageISO = Column(String(2), primary_key=True, nullable=False)
-    Field = Column(String(128), primary_key=True, nullable=False)
-    Value = Column(Text)
+    Hashtag = Column(Text, primary_key=True, nullable=False)
+    LanguageISO = Column(String(36), server_default='en')
 
     Session = relationship('Session')
 
@@ -77,18 +80,7 @@ class LiveTag(Base):
     __tablename__ = 'LiveTag'
 
     LiveUUID = Column(ForeignKey('Live.UUID', ondelete='CASCADE'), primary_key=True, nullable=False)
-    Hashtag = Column(String(256), primary_key=True, nullable=False)
-    LanguageISO = Column(String(2), primary_key=True, nullable=False)
-
-    Live = relationship('Live')
-
-
-class LiveTranslation(Base):
-    __tablename__ = 'LiveTranslation'
-
-    LiveUUID = Column(ForeignKey('Live.UUID', ondelete='CASCADE'), primary_key=True, nullable=False)
-    LanguageISO = Column(String(2), primary_key=True, nullable=False)
-    Field = Column(String(128), primary_key=True, nullable=False)
-    Value = Column(Text)
+    Hashtag = Column(Text, primary_key=True, nullable=False)
+    LanguageISO = Column(String(36), server_default='en')
 
     Live = relationship('Live')

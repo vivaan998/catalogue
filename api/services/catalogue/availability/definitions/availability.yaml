@@ -1,0 +1,9 @@
+type: object
+allOf:
+  - $ref: '#/definitions/AvailabilityBody'
+  - properties:
+      booked_slots:
+        type: integer
+        description: 'Number of booked slots'
+        default: 0
+

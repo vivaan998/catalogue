@@ -1,0 +1,8 @@
+type: object
+required:
+  - session_uuid
+properties:
+  session_uuid:
+    type: string
+    format: uuid
+    description: 'UUID of the session'

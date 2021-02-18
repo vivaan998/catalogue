@@ -1,0 +1,42 @@
+get:
+  security:
+    - Bearer: []
+  tags:
+    - Catalogue  
+  summary: 'Fetch categories'
+  description: 'Fetch categories'
+  parameters:
+    - name: language
+      in: query
+      required: True
+      type: string
+      description: 'ISO 639-1 language code'
+      default: 'en'
+      enum:
+        - 'en'
+        - 'fr'
+        - 'ít'
+        - 'es'
+        - 'de'
+        - 'zh'
+        - 'ar'
+        - 'hi'
+        - 'pt'
+  produces:
+    - application/json
+  responses:
+    '200':
+      description: 'Live found' 
+      schema:
+        type: array
+        items:
+          $ref: "#/definitions/Category"
+    '400':
+      description: Invalid query supplied
+      schema: 
+        $ref: '#/definitions/Message'
+    '404':
+      description: 'Not found'
+      schema: 
+        $ref: '#/definitions/Message'
+

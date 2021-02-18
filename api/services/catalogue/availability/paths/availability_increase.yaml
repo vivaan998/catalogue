@@ -1,0 +1,29 @@
+patch:
+  security:
+    - Bearer: []
+  tags:
+    - Catalogue - Availability  
+  summary: 'Increase availability for the given session (booking cancelled)'
+  description: 'Increase availability for the given session (booking cancelled)'
+  parameters:
+    - name: ref_uuid
+      in: path
+      required: True
+      type: string
+      description: 'Reference uuid'
+  produces:
+    - application/json
+  responses:
+    '200':
+      description: Availability increased 
+      schema:
+          $ref: "#/definitions/Availability"
+    '400':
+      description: Invalid query supplied
+      schema: 
+        $ref: '#/definitions/Message'
+    '404':
+      description: Not found
+      schema: 
+        $ref: '#/definitions/Message'
+

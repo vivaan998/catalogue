@@ -1,0 +1,57 @@
+get:
+  security:
+    - Bearer: []
+  tags:
+    - Catalogue - Manager
+  summary: 'Lists all sessions created by me'
+  description: 'Lists all sessions created by me'
+  produces:
+    - application/json
+  responses:
+    '200':
+      description: Sessions found 
+      schema:
+        type: array
+        items:
+          $ref: "#/definitions/SessionReply"
+    '400':
+      description: Invalid query supplied
+      schema: 
+        $ref: '#/definitions/Message'
+    '404':
+      description: Not found
+      schema: 
+        $ref: '#/definitions/Message' 
+
+post:
+  security:
+    - Bearer: []
+  tags:
+    - Catalogue - Manager
+  summary: 'Create a session'
+  description: 'Create an session'
+  consumes:
+    - application/json
+  produces:
+    - application/json
+  parameters:
+    - name: data
+      in: body
+      required: true
+      schema:
+        $ref: '#/definitions/SessionBody'
+  responses:
+    '201':
+      description: Feedback created
+      schema: 
+        $ref: '#/definitions/SessionReply'
+    '400':
+      description: Invalid uuid supplied
+      schema: 
+        $ref: '#/definitions/Message'
+    '404':
+      description: Session Uuid not found
+      schema: 
+        $ref: '#/definitions/Message'      
+
+

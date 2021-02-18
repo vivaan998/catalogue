@@ -1,0 +1,8 @@
+type: object
+required:
+  - booking_uuid
+properties:
+  booking_uuid:
+    type: string
+    format: uuid
+    description: 'UUID of the booking'

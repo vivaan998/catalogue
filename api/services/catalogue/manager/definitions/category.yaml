@@ -1,0 +1,15 @@
+type: object
+required:
+  - uuid
+  - value
+properties:
+  uuid:
+    type: string
+    format: uuid
+    description: 'UUID of the category. It is the same for all the languages'
+  value:
+    type: string
+    example: 'fitness, educational, entertaining, religious'
+    description: 'category in the given language'
+
+

@@ -1,0 +1,54 @@
+# Catalogue
+
+# GET
+/categories:
+  $ref: ./catalogue/manager/paths/category.yaml
+
+# POST
+/sessions:
+  $ref: ./catalogue/manager/paths/session.yaml
+
+# GET, DELETE, PUT
+/sessions/{session_uuid}:
+  $ref: ./catalogue/manager/paths/session_instance.yaml
+
+
+# GET LIVES FOR A SESSION
+/sessions/{session_uuid}/lives:
+  $ref: ./catalogue/manager/paths/session_instance_live.yaml
+
+# GET ALL, GET FOR SESSION, POST
+/lives:
+  $ref: ./catalogue/manager/paths/live.yaml
+
+# GET, PUT, DELETE
+/lives/{live_uuid}:
+  $ref: ./catalogue/manager/paths/live_instance.yaml
+
+# GET, POST
+/images:
+  $ref: ./catalogue/manager/paths/image.yaml
+
+# DELETE
+/images/{image_uuid}:
+  $ref: ./catalogue/manager/paths/image_instance.yaml
+
+
+# POST (create)
+/availabilities:
+  $ref: ./catalogue/availability/paths/availability.yaml
+
+# GET
+/availabilities/{ref_uuid}:
+  $ref: ./catalogue/availability/paths/availability_instance.yaml
+
+# POST (decrease)
+/availabilities/{ref_uuid}/decrease:
+  $ref: ./catalogue/availability/paths/availability_decrease.yaml 
+
+# POST (increase)
+/availabilities/{ref_uuid}/increase:
+  $ref: ./catalogue/availability/paths/availability_increase.yaml 
+
+
+

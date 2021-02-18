@@ -1,0 +1,22 @@
+delete:
+  security:
+    - Bearer: []
+  tags:
+    - Catalogue - Manager
+  summary: 'Delete an image'
+  description: 'Delete an image'
+  parameters:
+    - name: image_uuid
+      in: path
+      required: true
+      type: string
+      format: uuid
+  produces:
+    - application/json
+  responses:
+    '201':
+      description: "Image deleted" 
+    '400':
+      description: "Invalid UUID supplied"
+      schema: 
+        $ref: '#/definitions/Message'

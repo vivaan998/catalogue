@@ -9,6 +9,7 @@ cryptography==3.3.1
 pymysql==0.10.0
 # DEV
 sqlacodegen==2.3.0
-flake8
-coverage
+coverage==5.3.1
+flake8==3.8.4
+openapi-core
 

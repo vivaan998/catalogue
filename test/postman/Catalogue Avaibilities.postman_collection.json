@@ -1,0 +1,108 @@
+{
+	"info": {
+		"_postman_id": "810a307d-5999-4934-b5cd-f1b39a2a577b",
+		"name": "Catalogue availabilities",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Avaibility based on ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/availabilities/c9c79d06-b0c6-457d-af4f-de00a3b328ec",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"availabilities",
+						"c9c79d06-b0c6-457d-af4f-de00a3b328ec"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post availabilities",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"ref_uuid\": \"c9c79d06-b0c6-457d-af4f-de00a3b328ec\", \n    \"max_slots\": 3\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/v1/availabilities/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"availabilities",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch availabilities for cancel booking",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/availabilities/c9c79d06-b0c6-457d-af4f-de00a3b328ec/increase",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"availabilities",
+						"c9c79d06-b0c6-457d-af4f-de00a3b328ec",
+						"increase"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch availabilities for booking",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/availabilities/c9c79d06-b0c6-457d-af4f-de00a3b328ec/decrease",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"availabilities",
+						"c9c79d06-b0c6-457d-af4f-de00a3b328ec",
+						"decrease"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

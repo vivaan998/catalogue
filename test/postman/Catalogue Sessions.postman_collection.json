@@ -1,0 +1,167 @@
+{
+	"info": {
+		"_postman_id": "5286396d-bf61-4b90-b83d-f648f746e607",
+		"name": "Catalogue Sessions",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Sessions based on ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/sessions/ab0e318c-ed46-41bb-8cdb-3387e8aac2ff",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"sessions",
+						"ab0e318c-ed46-41bb-8cdb-3387e8aac2ff"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Session",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Second Session\",\n  \"category\": {\n    \"value\": \"body\",\n    \"uuid\": \"9cdd3e49-0907-4736-8321-c283a3041354\"\n  },\n  \"hashtags\": [\n    \"#bodyexercises\", \"#fitIndia\"\n  ],\n  \"description\": \"Shape your body\", \n  \"language_iso\": \"en\",\n  \"creator_uuid\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n  \"tokens\": 10\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/v1/sessions/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"sessions",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Session",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Third Session\",\n    \"category\": {\n        \"value\": \"body\",\n        \"uuid\": \"9cdd3e49-0907-4736-8321-c283a3041354\"\n    },\n    \"hashtags\": [\"#hello\"],\n    \"description\": \"tested\",\n    \"language_iso\": \"en\",\n    \"creator_uuid\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n    \"tokens\": 19\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/v1/sessions/ab0e318c-ed46-41bb-8cdb-3387e8aac2ff",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"sessions",
+						"ab0e318c-ed46-41bb-8cdb-3387e8aac2ff"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Session",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/sessions/6799f908-3f21-4a95-a90e-af5c09ab24f1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"sessions",
+						"6799f908-3f21-4a95-a90e-af5c09ab24f1"
+					],
+					"query": [
+						{
+							"key": "session_uuid",
+							"value": "8d9da9ec-154b-4f8a-af6d-751551434dfc",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all sessions",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/sessions/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"sessions",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Lives based on Session UUID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/sessions/ab0e318c-ed46-41bb-8cdb-3387e8aac2ff/lives",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"sessions",
+						"ab0e318c-ed46-41bb-8cdb-3387e8aac2ff",
+						"lives"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

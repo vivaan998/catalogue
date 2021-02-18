@@ -1,0 +1,96 @@
+get:
+  security:
+    - Bearer: []
+  tags:
+    - Catalogue - Manager
+  summary: 'Get information about the requested session'
+  description: 'Get information about the requested session'  
+  parameters:
+    - name: session_uuid
+      in: path
+      required: true
+      type: string
+      format: uuid
+  produces:
+    - application/json
+  responses:
+    '200':
+      description: Session found 
+      schema:
+        $ref: "#/definitions/Session"
+    '400':
+      description: Invalid UUID supplied
+      schema: 
+        $ref: '#/definitions/Message'
+    '404':
+      description: Not found
+      schema: 
+        $ref: '#/definitions/Message'
+
+
+put:
+  security:
+    - Bearer: []
+  tags:
+    - Catalogue - Manager
+  summary: 'Create a session'
+  description: 'Create an session'
+  consumes:
+    - application/json
+  produces:
+    - application/json
+  parameters:
+    - name: session_uuid
+      in: path
+      required: true
+      type: string
+      format: uuid
+    - name: data
+      in: body
+      required: true
+      schema:
+        $ref: '#/definitions/SessionBody'
+  responses:
+    '204':
+      description: Feedback created
+      schema: 
+        $ref: '#/definitions/SessionReply'
+    '400':
+      description: Invalid uuid supplied
+      schema: 
+        $ref: '#/definitions/Message'
+    '404':
+      description: Session Uuid not found
+      schema: 
+        $ref: '#/definitions/Message'
+
+delete:
+  security:
+    - Bearer: []
+  tags:
+    - Catalogue - Manager
+  summary: 'Delete a session and all the relative lives / images'
+  description: 'A special handling has to be done on the users that buy the lives' 
+  parameters:
+    - name: session_uuid
+      in: path
+      required: true
+      type: string
+  produces:
+    - application/json
+  responses:
+    '204':
+      description: session deleted 
+      schema: 
+        $ref: '#/definitions/Message'
+    '400':
+      description: Invalid UUID supplied
+      schema: 
+        $ref: '#/definitions/Message'
+    '404':
+      description: Not found
+      schema: 
+        $ref: '#/definitions/Message'
+
+
+

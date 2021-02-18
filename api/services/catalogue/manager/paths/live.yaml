@@ -1,0 +1,64 @@
+get:
+  security:
+    - Bearer: []
+  tags:
+    - Catalogue - Manager
+  summary: 'Fetch live details by uuid or all the one I created'
+  description: 'Fetch live details by uuid or all the one I created'
+  parameters:
+    - name: live_uuid
+      in: query
+      type: string
+      format: uuid
+      description: Optionally pass the live uuid to list all the relative details
+  produces:
+    - application/json
+  responses:
+    '200':
+      description: "Live found" 
+      schema:
+        type: array
+        items:
+          $ref: "#/definitions/Live"
+    '400':
+      description: "Invalid query supplied"
+      schema: 
+        $ref: '#/definitions/Message'
+    '404':
+      description: "Not found"
+      schema: 
+        $ref: '#/definitions/Message'
+
+
+post:
+  security:
+    - Bearer: []
+  tags:
+    - Catalogue - Manager
+  summary: 'Create live'
+  description: 'Create live, the presenter, if not specififed, will be the creator of the relative session'
+  parameters:
+    - name: data
+      in: body
+      schema:
+        type: object
+        allOf:
+          - properties:
+              session_uuid:
+                type: string
+                format: uuid
+          - $ref: '#/definitions/LiveBody'
+      required: True
+  produces:
+    - application/json
+  responses:
+    '201':
+      description: "Lives created"
+    '400':
+      description: "Invalid query supplied"
+      schema: 
+        $ref: '#/definitions/Message'
+    '404':
+      description: "Not found"
+      schema: 
+        $ref: '#/definitions/Message'

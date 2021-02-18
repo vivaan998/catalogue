@@ -1,0 +1,36 @@
+type: object
+required:
+  - name
+  - category
+  - creator_uuid
+  - tokens
+properties:
+  name:
+    type: string    
+    description: 'Name of the session'
+  category:
+    $ref: '#/definitions/Category'
+  hashtags:
+    type: array
+    description: Array of hashtags
+    items:
+      type: string
+      example: '#bestof2021'
+  description:
+      type: string
+  language_iso:
+    $ref: '#/definitions/LanguageCode'
+  creator_uuid:
+    type: string
+    format: uuid
+    description: 'UUID of the creator (user) of the session'
+  tokens:
+    type: integer
+    minimum: 0
+    description: 'Number of tokens needed to attend the session'
+
+
+
+
+
+  

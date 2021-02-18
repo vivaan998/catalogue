@@ -1,19 +1,19 @@
 swagger: '2.0'
 info:
   version: 1.0.0
-  title: Catalogue API
-host: localhost
+  title: Flio API
+host: 'localhost:5000'
 basePath: /api/v1
 schemes:
   - https
   - http
 securityDefinitions:
-  Bearer:
+  BearerAuth:
     type: apiKey
     name: Authorization
     in: header
 paths:
-  /categories/:
+  /categories:
     get:
       security:
         - Bearer: []
@@ -55,7 +55,31 @@ paths:
           description: Not found
           schema:
             $ref: '#/definitions/Message'
-  /sessions/:
+  /sessions:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Catalogue - Manager
+      summary: Lists all sessions created by me
+      description: Lists all sessions created by me
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Sessions found
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SessionReply'
+        '400':
+          description: Invalid query supplied
+          schema:
+            $ref: '#/definitions/Message'
+        '404':
+          description: Not found
+          schema:
+            $ref: '#/definitions/Message'
     post:
       security:
         - Bearer: []
@@ -74,7 +98,7 @@ paths:
           schema:
             $ref: '#/definitions/SessionBody'
       responses:
-        '200':
+        '201':
           description: Feedback created
           schema:
             $ref: '#/definitions/SessionReply'
@@ -115,6 +139,41 @@ paths:
           description: Not found
           schema:
             $ref: '#/definitions/Message'
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Catalogue - Manager
+      summary: Create a session
+      description: Create an session
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: session_uuid
+          in: path
+          required: true
+          type: string
+          format: uuid
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/SessionBody'
+      responses:
+        '204':
+          description: Feedback created
+          schema:
+            $ref: '#/definitions/SessionReply'
+        '400':
+          description: Invalid uuid supplied
+          schema:
+            $ref: '#/definitions/Message'
+        '404':
+          description: Session Uuid not found
+          schema:
+            $ref: '#/definitions/Message'
     delete:
       security:
         - Bearer: []
@@ -142,20 +201,54 @@ paths:
           description: Not found
           schema:
             $ref: '#/definitions/Message'
-  /lives/:
+  '/sessions/{session_uuid}/lives':
     get:
       security:
         - Bearer: []
       tags:
         - Catalogue - Manager
-      summary: Fetch live details for a given session
-      description: Fetch live details for a given session
+      summary: Get information about the requested session
+      description: Get information about the requested session
       parameters:
         - name: session_uuid
+          in: path
+          required: true
+          type: string
+          format: uuid
+        - name: live_uuid
+          in: path
+          required: true
+          type: string
+          format: uuid
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Session found
+          schema:
+            $ref: '#/definitions/Session'
+        '400':
+          description: Invalid UUID supplied
+          schema:
+            $ref: '#/definitions/Message'
+        '404':
+          description: Not found
+          schema:
+            $ref: '#/definitions/Message'
+  /lives:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Catalogue - Manager
+      summary: Fetch live details by uuid or all the one I created
+      description: Fetch live details by uuid or all the one I created
+      parameters:
+        - name: live_uuid
           in: query
           type: string
           format: uuid
-          required: true
+          description: Optionally pass the live uuid to list all the relative details
       produces:
         - application/json
       responses:
@@ -187,14 +280,12 @@ paths:
           in: body
           schema:
             type: object
-            properties:
-              lives:
-                type: array
-                items:
-                  $ref: '#/definitions/LiveBody'
-              session_uuid:
-                type: string
-                format: uuid
+            allOf:
+              - properties:
+                  session_uuid:
+                    type: string
+                    format: uuid
+              - $ref: '#/definitions/LiveBody'
           required: true
       produces:
         - application/json
@@ -210,24 +301,27 @@ paths:
           schema:
             $ref: '#/definitions/Message'
   '/lives/{live_uuid}':
-    delete:
+    get:
       security:
         - Bearer: []
       tags:
         - Catalogue - Manager
-      summary: Delete live
-      description: Delete live
+      summary: Fetch live details by uuid or all the one I created
+      description: Fetch live details by uuid or all the one I created
       parameters:
         - name: live_uuid
           in: path
-          required: true
           type: string
           format: uuid
+          required: true
+          description: Optionally pass the live uuid to list all the relative details
       produces:
         - application/json
       responses:
-        '201':
-          description: Lives deleted
+        '200':
+          description: Live found
+          schema:
+            $ref: '#/definitions/Live'
         '400':
           description: Invalid query supplied
           schema:
@@ -275,7 +369,34 @@ paths:
           description: Not found
           schema:
             $ref: '#/definitions/Message'
-  /images/:
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - Catalogue - Manager
+      summary: Delete a session and all the relative lives / images
+      description: A special handling has to be done on the users that buy the lives
+      parameters:
+        - name: live_uuid
+          in: path
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '204':
+          description: live deleted
+          schema:
+            $ref: '#/definitions/Message'
+        '400':
+          description: Invalid UUID supplied
+          schema:
+            $ref: '#/definitions/Message'
+        '404':
+          description: Not found
+          schema:
+            $ref: '#/definitions/Message'
+  /images:
     post:
       security:
         - Bearer: []
@@ -359,7 +480,7 @@ paths:
           description: Invalid UUID supplied
           schema:
             $ref: '#/definitions/Message'
-  /availabilities/:
+  /availabilities:
     post:
       security:
         - Bearer: []
@@ -475,56 +596,7 @@ paths:
             $ref: '#/definitions/Message'
 definitions:
   Message:
-    type: object
-    properties:
-      debug:
-        type: array
-        description: List of debug messages
-        items:
-          type: object
-          properties:
-            code:
-              type: string
-              description: Debug code
-            message:
-              type: string
-              description: Debug message in English
-      info:
-        type: array
-        description: List of info messages
-        items:
-          type: object
-          properties:
-            code:
-              type: string
-              description: Info code
-            message:
-              type: string
-              description: Info message in English
-      errors:
-        type: array
-        description: List of error messages
-        items:
-          type: object
-          properties:
-            code:
-              type: string
-              description: Error code
-            message:
-              type: string
-              description: Error message in English
-      warnings:
-        type: array
-        description: List of warning messages
-        items:
-          type: object
-          properties:
-            code:
-              type: string
-              description: Warning code
-            message:
-              type: string
-              description: Warning message in English
+    type: string
   LanguageCode:
     type: string
     description: ISO 639-1 language code
@@ -556,21 +628,19 @@ definitions:
   Category:
     type: object
     required:
-      - value
       - uuid
+      - value
     properties:
-      value:
-        type: string
-        example: 'fitness, educational, entertaining, religious'
-        description: category in the given language
       uuid:
         type: string
         format: uuid
         description: UUID of the category. It is the same for all the languages
+      value:
+        type: string
+        example: 'fitness, educational, entertaining, religious'
+        description: category in the given language
   Session:
     type: object
-    required:
-      - uuid
     allOf:
       - $ref: '#/definitions/SessionBody'
       - properties:
@@ -580,11 +650,10 @@ definitions:
             description: UUID of the session
           created_at:
             type: string
-            format: datetime
+            format: date-time
             description: >-
               GMT Creation date time of the session as defined by RFC 3339,
               section 5.6
-            example: '2020-07-21T17:32:28Z'
   SessionBody:
     type: object
     required:
@@ -605,7 +674,9 @@ definitions:
           type: string
           example: '#bestof2021'
       description:
-        $ref: '#/definitions/Localizable'
+        type: string
+      language_iso:
+        $ref: '#/definitions/LanguageCode'
       creator_uuid:
         type: string
         format: uuid
@@ -625,19 +696,18 @@ definitions:
         description: UUID of the session
   Image:
     type: object
-    required:
-      - uuid
-      - title
     allOf:
       - properties:
           uuid:
             type: string
             format: uuid
             description: 'UUID of the image, used for delete operation'
+            example: ''
           uri:
             type: string
             format: uri
             description: Uri of the image generated by the server
+            example: session-uuid/image-uuid
       - $ref: '#/definitions/ImageBody'
   ImageBody:
     type: object
@@ -650,11 +720,6 @@ definitions:
         description: UUID of the session
   Live:
     type: object
-    required:
-      - presenter_uuid
-      - session_uuid
-      - from
-      - to
     allOf:
       - $ref: '#/definitions/LiveBody'
       - properties:
@@ -666,15 +731,12 @@ definitions:
             type: string
             format: uuid
             description: UUID of the session
-          streaming_uuid:
-            type: string
-            format: uuid
-            description: UUID of the streaming
   LiveBody:
     type: object
     required:
       - from
       - to
+      - presenter_uuid
     properties:
       from:
         type: string
@@ -690,12 +752,9 @@ definitions:
         description: UUID of the presenter (user)
       description:
         type: string
-      language:
-        $ref: '#/definitions/LanguageCode'
+        description: Teh lenaguage of the description is the same of the session
   Availability:
     type: object
-    required:
-      - ref_uuid
     allOf:
       - $ref: '#/definitions/AvailabilityBody'
       - properties:

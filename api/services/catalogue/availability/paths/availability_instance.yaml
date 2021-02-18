@@ -1,0 +1,29 @@
+get:
+  security:
+    - Bearer: []
+  tags:
+    - Catalogue - Availability  
+  summary: 'Fetch availability for the given session'
+  description: 'Fetch categories'
+  parameters:
+    - name: ref_uuid
+      in: path
+      required: True
+      type: string
+      description: 'Reference uuid'
+  produces:
+    - application/json
+  responses:
+    '200':
+      description: Availability found 
+      schema:
+          $ref: "#/definitions/Availability"
+    '400':
+      description: Invalid query supplied
+      schema: 
+        $ref: '#/definitions/Message'
+    '404':
+      description: Not found
+      schema: 
+        $ref: '#/definitions/Message'
+

@@ -1,0 +1,180 @@
+{
+	"info": {
+		"_postman_id": "8f4e5d73-7619-4180-aea3-f7bff5b15432",
+		"name": "Catalogue Live",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Live based on ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/lives/b1c67fe4-e3fb-4ab4-baca-c925c6819d8e",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"lives",
+						"b1c67fe4-e3fb-4ab4-baca-c925c6819d8e"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all lives",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/lives/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"lives",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Live",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \n    \"from\": \"2021-01-26T11:03:21.888Z\",\n    \"to\": \"2021-01-26T11:04:21.888Z\",\n    \"presenter_uuid\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n    \"description\": \"Third Live Create\",\n    \"session_uuid\": \"ff653833-8f45-42d1-87f7-9d5a9e5c2db8\", \n    \"hashtags\": [\"#test\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/v1/lives/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"lives",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Live",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"hashtags\": [],   \n    \"from\": \"2021-01-26T11:03:21.888Z\",\n    \"to\": \"2021-01-26T11:05:21.888Z\",\n    \"presenter_uuid\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n    \"description\": \"Live Update\",\n    \"session_uuid\": \"ab0e318c-ed46-41bb-8cdb-3387e8aac2ff\" \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/v1/lives/d73d5c65-9a99-4825-9f65-91cb8c722133",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"lives",
+						"d73d5c65-9a99-4825-9f65-91cb8c722133"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Live",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/lives/d73d5c65-9a99-4825-9f65-91cb8c722133",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"lives",
+						"d73d5c65-9a99-4825-9f65-91cb8c722133"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Live based on User",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/lives/user/3fa85f64-5717-4562-b3fc-2c963f66afa6?search=third",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"lives",
+						"user",
+						"3fa85f64-5717-4562-b3fc-2c963f66afa6"
+					],
+					"query": [
+						{
+							"key": "search",
+							"value": "third"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
